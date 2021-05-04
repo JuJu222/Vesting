@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectUAS">
         <activity android:name=".SearchActivity" />
+        <activity android:name=".Homepage" />
+        <activity android:name=".Register" />
+        <activity android:name=".Login" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
