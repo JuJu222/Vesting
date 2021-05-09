@@ -28,8 +28,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().hide();
-
         login_textInput_email = findViewById(R.id.login_textInput_email);
         login_textInput_pass = findViewById(R.id.login_textInput_pass);
         login_button_Login = findViewById(R.id.login_button_Login);
@@ -56,7 +54,7 @@ public class Login extends AppCompatActivity {
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
                         User tempUser = UserArray.akunuser.get(i);
                         if(tempUser.getEmail().equalsIgnoreCase(email) && tempUser.getPassword().equals(password)){
-                            Intent intent = new Intent(getBaseContext(), Homepage.class);
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
                             intent.putExtra("IDuser", tempUser);
                             finish();
                             startActivity(intent);
