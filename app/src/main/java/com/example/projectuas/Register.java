@@ -23,8 +23,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        getSupportActionBar().hide();
-
         signup_textInput_email = findViewById(R.id.signup_textInput_email);
         signup_textInput_name = findViewById(R.id.signup_textInput_name);
         signup_textInput_pass = findViewById(R.id.signup_textInput_pass);
@@ -54,7 +52,7 @@ public class Register extends AppCompatActivity {
                 }
 
                 if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty()){
-                    Intent intent = new Intent(getBaseContext(), Homepage.class);
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     User user = new User(email, nama, password);
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
                         if(user.getEmail().equalsIgnoreCase(UserArray.akunuser.get(i).getEmail())){
