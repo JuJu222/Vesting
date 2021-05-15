@@ -3,8 +3,12 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class User implements Parcelable{
     private String nama, email, password;
+    private double balance;
+    private ArrayList<OwnedCompany> ownedCompanies;
 
     public User() {
         this.email = "";
@@ -12,10 +16,12 @@ public class User implements Parcelable{
         this.password = "";
     }
 
-    public User(String email, String nama, String password) {
+    public User(String email, String nama, String password, ArrayList<OwnedCompany> ownedCompanies) {
         this.email = email;
         this.nama = nama;
         this.password = password;
+        this.balance = 10000.00;
+        this.ownedCompanies = ownedCompanies;
     }
 
     protected User(Parcel in) {
@@ -58,6 +64,18 @@ public class User implements Parcelable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public ArrayList<OwnedCompany> getOwnedCompanies() {
+        return ownedCompanies;
     }
 
     @Override
