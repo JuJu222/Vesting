@@ -11,6 +11,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import model.Companies;
+import model.ListedCompany;
 import model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        intent = getIntent();
-
-        User user = intent.getParcelableExtra("IDuser");
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -34,6 +32,41 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
+
+        intent = getIntent();
+
+        User user = intent.getParcelableExtra("IDuser");
+        
+        Companies.getListedCompanies().add(new ListedCompany("MMM"));
+        Companies.getListedCompanies().add(new ListedCompany("AXP"));
+        Companies.getListedCompanies().add(new ListedCompany("AMGN"));
+        Companies.getListedCompanies().add(new ListedCompany("AAPL"));
+        Companies.getListedCompanies().add(new ListedCompany("BA"));
+        Companies.getListedCompanies().add(new ListedCompany("CAT"));
+        Companies.getListedCompanies().add(new ListedCompany("CVX"));
+        Companies.getListedCompanies().add(new ListedCompany("CSCO"));
+        Companies.getListedCompanies().add(new ListedCompany("KO"));
+        Companies.getListedCompanies().add(new ListedCompany("DOW"));
+        Companies.getListedCompanies().add(new ListedCompany("GS"));
+        Companies.getListedCompanies().add(new ListedCompany("HD"));
+        Companies.getListedCompanies().add(new ListedCompany("HON"));
+        Companies.getListedCompanies().add(new ListedCompany("IBM"));
+        Companies.getListedCompanies().add(new ListedCompany("INTC"));
+        Companies.getListedCompanies().add(new ListedCompany("JNJ"));
+        Companies.getListedCompanies().add(new ListedCompany("JPM"));
+        Companies.getListedCompanies().add(new ListedCompany("MCD"));
+        Companies.getListedCompanies().add(new ListedCompany("MRK"));
+        Companies.getListedCompanies().add(new ListedCompany("MSFT"));
+        Companies.getListedCompanies().add(new ListedCompany("NKE"));
+        Companies.getListedCompanies().add(new ListedCompany("PG"));
+        Companies.getListedCompanies().add(new ListedCompany("CRM"));
+        Companies.getListedCompanies().add(new ListedCompany("TRV"));
+        Companies.getListedCompanies().add(new ListedCompany("UNH"));
+        Companies.getListedCompanies().add(new ListedCompany("VZ"));
+        Companies.getListedCompanies().add(new ListedCompany("V"));
+        Companies.getListedCompanies().add(new ListedCompany("WBA"));
+        Companies.getListedCompanies().add(new ListedCompany("WMT"));
+        Companies.getListedCompanies().add(new ListedCompany("DIS"));
     }
 
 }

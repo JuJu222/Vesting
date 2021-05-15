@@ -25,11 +25,10 @@
         android:layout_width="match_parent"
         android:layout_height="248dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeSearchBarTextView">
+        app:layout_constraintTop_toBottomOf="@+id/homePriceTextView">
 
     </com.github.mikephil.charting.charts.CandleStickChart>
 
@@ -37,7 +36,7 @@
         android:id="@+id/homeSearchBarTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/search_bar"
         android:paddingLeft="16dp"
@@ -48,6 +47,80 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView" />
+
+    <TextView
+        android:id="@+id/homeWelcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/homeSearchBarTextView"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/homeWelcomeTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="S&amp;P 500"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/homeSearchBarTextView"
+        app:layout_constraintTop_toBottomOf="@+id/homeSearchBarTextView" />
+
+    <TextView
+        android:id="@+id/homeWelcomeTextView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Last trading day (5m)"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/homeWelcomeTextView2"
+        app:layout_constraintStart_toEndOf="@+id/homeWelcomeTextView2" />
+
+    <TextView
+        android:id="@+id/homePriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/homeWelcomeTextView2"
+        app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView2" />
+
+    <TextView
+        android:id="@+id/homePercentageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/homePriceTextView"
+        app:layout_constraintStart_toEndOf="@+id/homePriceTextView" />
+
+    <TextView
+        android:id="@+id/homeWelcomeTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Discover"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/homePriceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+    <TextView
+        android:id="@+id/homeWelcomeTextView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Explore all news"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/homeWelcomeTextView3"
+        app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
