@@ -5,28 +5,27 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Company implements Parcelable {
+public class ListedCompany implements Parcelable {
     private String companySymbol;
     private ArrayList<Price> companyStockPrices;
 
-    public Company(String companySymbol, ArrayList<Price> companyStockPrices) {
+    public ListedCompany(String companySymbol) {
         this.companySymbol = companySymbol;
-        this.companyStockPrices = companyStockPrices;
     }
 
-    protected Company(Parcel in) {
+    protected ListedCompany(Parcel in) {
         companySymbol = in.readString();
     }
 
-    public static final Creator<Company> CREATOR = new Creator<Company>() {
+    public static final Creator<ListedCompany> CREATOR = new Creator<ListedCompany>() {
         @Override
-        public Company createFromParcel(Parcel in) {
-            return new Company(in);
+        public ListedCompany createFromParcel(Parcel in) {
+            return new ListedCompany(in);
         }
 
         @Override
-        public Company[] newArray(int size) {
-            return new Company[size];
+        public ListedCompany[] newArray(int size) {
+            return new ListedCompany[size];
         }
     };
 

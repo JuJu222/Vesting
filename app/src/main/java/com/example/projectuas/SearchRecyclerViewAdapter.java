@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Company;
+import model.ListedCompany;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private List<Company> mData;
+public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder> {
+    private List<ListedCompany> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapter(Context context, List<Company> data) {
+    SearchRecyclerViewAdapter(Context context, List<ListedCompany> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -27,14 +27,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
+        View view = mInflater.inflate(R.layout.recycler_search_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Company symbol = mData.get(position);
+        ListedCompany symbol = mData.get(position);
         holder.myTextView.setText(symbol.getCompanySymbol());
     }
 
@@ -62,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     // convenience method for getting data at click position
-    Company getItem(int id) {
+    ListedCompany getItem(int id) {
         return mData.get(id);
     }
 
@@ -76,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         void onItemClick(View view, int position);
     }
 
-    public void filterList(ArrayList<Company> filteredList) {
+    public void filterList(ArrayList<ListedCompany> filteredList) {
         mData = filteredList;
         notifyDataSetChanged();
     }
