@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+
+import model.TinyDB;
 import model.User;
 import model.UserArray;
 
@@ -52,8 +55,8 @@ public class Register extends AppCompatActivity {
                 }
 
                 if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty()){
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    User user = new User(email, nama, password);
+                    Intent intent = new Intent(Register.this, MainActivity.class);
+                    User user = new User(email, nama, password, new ArrayList<>());
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
                         if(user.getEmail().equalsIgnoreCase(UserArray.akunuser.get(i).getEmail())){
                             Toast.makeText(getBaseContext(), "Email is already Registered!", Toast.LENGTH_SHORT).show();
@@ -63,7 +66,13 @@ public class Register extends AppCompatActivity {
                     intent.putExtra("IDuser", user);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    TinyDB tinydb = new TinyDB(getApplicationContext());
+
+                    UserArray.akunuser = tinydb.getListUser("akunuser");
                     UserArray.akunuser.add(user);
+                    UserArray.currentUser = user;
+                    tinydb.putListUser("akunuser", UserArray.akunuser);
+
                     Toast.makeText(getApplicationContext(), "Account Created!", Toast.LENGTH_SHORT).show();
                 }
             }

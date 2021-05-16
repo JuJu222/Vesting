@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
 
+import model.TinyDB;
 import model.User;
 import model.UserArray;
 
@@ -38,7 +39,7 @@ public class Login extends AppCompatActivity {
         login_button_Signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), Register.class);
+                Intent intent = new Intent(Login.this, Register.class);
                 startActivity(intent);
             }
         });
@@ -51,13 +52,17 @@ public class Login extends AppCompatActivity {
 
                 if(validateEmail && validatePass){
                     Boolean login = false;
+                    TinyDB tinydb = new TinyDB(getApplicationContext());
+
+                    UserArray.akunuser = tinydb.getListUser("akunuser");
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
                         User tempUser = UserArray.akunuser.get(i);
                         if(tempUser.getEmail().equalsIgnoreCase(email) && tempUser.getPassword().equals(password)){
-                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            Intent intent = new Intent(Login.this, MainActivity.class);
                             intent.putExtra("IDuser", tempUser);
-                            finish();
+                            UserArray.currentUser = tempUser;
                             startActivity(intent);
+                            finish();
                             Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
                             login=true;
                         }
