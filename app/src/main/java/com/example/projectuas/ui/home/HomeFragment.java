@@ -18,12 +18,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.projectuas.R;
 import com.example.projectuas.SearchActivity;
 import com.github.mikephil.charting.charts.CandleStickChart;
-import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
-
-import model.Company;
+import model.ListedCompany;
 import model.Stocks;
+import model.UserArray;
 
 public class HomeFragment extends Fragment {
     RequestQueue mQueue;
@@ -38,16 +36,23 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                TextView homeSearchBarTextView = root.findViewById(R.id.homeSearchBarTextView);
+                TextView homeWelcomeTextView = root.findViewById(R.id.homeWelcomeTextView);
+                TextView homePriceTextView = root.findViewById(R.id.homePriceTextView);
+                TextView homePercentageTextView = root.findViewById(R.id.homePercentageTextView);
+
                 mQueue = Volley.newRequestQueue(getContext());
 
                 CandleStickChart chart = (CandleStickChart) root.findViewById(R.id.chart);
+                chart.setNoDataText("Loading data...");
 
                 Stocks stocks = new Stocks();
 
-                Company company = new Company("IBM", new ArrayList<>());
-//                stocks.setCompanyData(mQueue, company, chart);
+                ListedCompany listedCompany = new ListedCompany("SPY");
+                stocks.setCompanyChartHome(getContext(), mQueue, listedCompany, chart, homePriceTextView, homePercentageTextView);
 
-                TextView homeSearchBarTextView = root.findViewById(R.id.homeSearchBarTextView);
+                String welcome = "Welcome back " + UserArray.currentUser.getNama() + "!";
+                homeWelcomeTextView.setText(welcome);
 
                 homeSearchBarTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
