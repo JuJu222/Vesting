@@ -2,17 +2,25 @@ package com.example.projectuas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import model.TinyDB;
 import model.User;
 import model.UserArray;
 
@@ -63,17 +71,8 @@ public class Register extends AppCompatActivity {
                             return;
                         }
                     }
-                    intent.putExtra("IDuser", user);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    TinyDB tinydb = new TinyDB(getApplicationContext());
 
-                    UserArray.akunuser = tinydb.getListUser("akunuser");
-                    UserArray.akunuser.add(user);
-                    UserArray.currentUser = user;
-                    tinydb.putListUser("akunuser", UserArray.akunuser);
-
-                    Toast.makeText(getApplicationContext(), "Account Created!", Toast.LENGTH_SHORT).show();
+                    addDataDB(getApplicationContext());
                 }
             }
         });
@@ -84,5 +83,47 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void addDataDB(Context context) {
+        String url = "http://192.168.100.18/vesting_webservice/create_user.php";
+
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                if (response.equalsIgnoreCase("{\"message\":\"Failed to save\"}")) {
+                    Toast.makeText(getApplicationContext(), "Email Address Already Exists!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Account Created! Please Log In", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("name", signup_textInput_name.getEditText().getText().toString().trim());
+                params.put("email", signup_textInput_email.getEditText().getText().toString().trim());
+                params.put("password", signup_textInput_pass.getEditText().getText().toString().trim());
+
+                return params;
+            }
+        };
+
+        mQueue.add(request);
     }
 }

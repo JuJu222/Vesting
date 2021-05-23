@@ -2,6 +2,7 @@ package com.example.projectuas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -14,14 +15,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.CandleStickChart;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import model.ListedCompany;
-import model.OwnedCompany;
 import model.Stocks;
-import model.TinyDB;
 import model.UserArray;
 import model.VolleyCallback;
 
@@ -82,39 +88,50 @@ public class CompanyActivity extends AppCompatActivity {
                         companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
                         companyBuyButton.setEnabled(true);
                         UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() - Double.parseDouble(result));
-
-                        for (OwnedCompany ownedCompany : UserArray.currentUser.getOwnedCompanies()) {
-                            if (ownedCompany.getCompanySymbol().equalsIgnoreCase(listedCompany.getCompanySymbol())) {
-                                exists = true;
-
-                                ownedCompany.setLots(ownedCompany.getLots() + 1);
-                                ownedCompany.setAverageBoughtPrice((ownedCompany.getAverageBoughtPrice() + listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose()) / 2);
-                            }
-                        }
-
-                        if (!exists) {
-                            OwnedCompany temp = new OwnedCompany();
-                            temp.setCompanySymbol(listedCompany.getCompanySymbol());
-                            temp.setLots(1);
-                            temp.setAverageBoughtPrice(listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose());
-
-                            UserArray.currentUser.getOwnedCompanies().add(temp);
-                        }
-
-                        TinyDB tinydb = new TinyDB(getApplicationContext());
-
-                        UserArray.akunuser = tinydb.getListUser("akunuser");
-                        for (int i = 0; i < UserArray.akunuser.size(); i++) {
-                            if (UserArray.currentUser.getEmail().equalsIgnoreCase(UserArray.akunuser.get(i).getEmail())) {
-                                UserArray.akunuser.set(i, UserArray.currentUser);
-                            }
-                        }
-                        tinydb.putListUser("akunuser", UserArray.akunuser);
+                        
+                        buyPortfolioDB(listedCompany, getApplicationContext());
 
                         Toast.makeText(getApplicationContext(), "Bought 1 lot of " + listedCompany.getCompanySymbol() + " for " + listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
+    }
+
+    private void buyPortfolioDB(ListedCompany listedCompany, Context context) {
+        String url = "http://192.168.100.18/vesting_webservice/buy_portfolio.php";
+
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("symbol", listedCompany.getCompanySymbol());
+                params.put("price", String.valueOf(listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose()));
+                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
+                params.put("balance", String.valueOf(UserArray.currentUser.getBalance()));
+
+                return params;
+            }
+        };
+
+        mQueue.add(request);
     }
 }
