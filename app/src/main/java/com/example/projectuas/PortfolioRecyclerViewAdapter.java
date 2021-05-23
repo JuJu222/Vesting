@@ -1,5 +1,6 @@
 package com.example.projectuas;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
@@ -12,15 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.OwnedCompany;
 import model.Stocks;
-import model.TinyDB;
 import model.UserArray;
 import model.VolleyCallback;
 
@@ -99,26 +105,8 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
                 @Override
                 public void onClick(View v) {
                     buttonClicked = true;
-                    Toast.makeText(holder.portfolioRowAveragePriceTextView.getContext(), "Sold 1 lot of " + ownedCompanyArrayList.get(position).getCompanySymbol() + " for " + holder.portfolioRowCurrentPriceTextView.getText().toString(), Toast.LENGTH_SHORT).show();
-                    ownedCompanyArrayList.get(position).setLots(ownedCompanyArrayList.get(position).getLots() - 1);
                     UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() + Double.parseDouble(holder.portfolioRowCurrentPriceTextView.getText().toString()));
-                    if (ownedCompanyArrayList.get(position).getLots() == 0) {
-                        ownedCompanyArrayList.remove(position);
-                    }
-
-                    String temp = "$" + df.format(UserArray.currentUser.getBalance());
-                    portfolioBalanceTextView.setText(temp);
-
-                    TinyDB tinydb = new TinyDB(holder.portfolioRowTextView.getContext());
-
-                    UserArray.akunuser = tinydb.getListUser("akunuser");
-                    for (int i = 0; i < UserArray.akunuser.size(); i++) {
-                        if (UserArray.currentUser.getEmail().equalsIgnoreCase(UserArray.akunuser.get(i).getEmail())) {
-                            UserArray.akunuser.set(i, UserArray.currentUser);
-                        }
-                    }
-                    tinydb.putListUser("akunuser", UserArray.akunuser);
-                    notifyDataSetChanged();
+                    sellPortfolioDB(holder, position, holder.portfolioRowAveragePriceTextView.getContext());
                 }
             });
         }
@@ -146,5 +134,51 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
             portfolioRowPercentageChange = itemView.findViewById(R.id.portfolioRowPercentageChange);
             portfolioRowSellButton = itemView.findViewById(R.id.portfolioRowSellButton);
         }
+    }
+
+    private void sellPortfolioDB(@NonNull PortfolioRecyclerViewAdapter.PortfolioViewHolder holder, int position, Context context) {
+        String url = "http://192.168.100.18/vesting_webservice/sell_portfolio.php";
+
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(holder.portfolioRowAveragePriceTextView.getContext(), "Sold 1 lot of " + ownedCompanyArrayList.get(position).getCompanySymbol() + " for " + holder.portfolioRowCurrentPriceTextView.getText().toString(), Toast.LENGTH_SHORT).show();
+                ownedCompanyArrayList.get(position).setLots(ownedCompanyArrayList.get(position).getLots() - 1);
+                DecimalFormat df = new DecimalFormat("#.##");
+                String temp = "$" + df.format(UserArray.currentUser.getBalance());
+                portfolioBalanceTextView.setText(temp);
+                if (ownedCompanyArrayList.get(position).getLots() == 0) {
+                    ownedCompanyArrayList.remove(position);
+                }
+                notifyDataSetChanged();
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("symbol", ownedCompanyArrayList.get(position).getCompanySymbol());
+                params.put("price", holder.portfolioRowCurrentPriceTextView.getText().toString());
+                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
+                params.put("balance", String.valueOf(UserArray.currentUser.getBalance()));
+
+                return params;
+            }
+        };
+
+        mQueue.add(request);
     }
 }
