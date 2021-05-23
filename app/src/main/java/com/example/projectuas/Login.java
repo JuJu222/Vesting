@@ -2,19 +2,32 @@ package com.example.projectuas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import model.TinyDB;
 import model.User;
 import model.UserArray;
 
@@ -47,29 +60,8 @@ public class Login extends AppCompatActivity {
         login_button_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = login_textInput_email.getEditText().getText().toString().trim();
-                String password = login_textInput_pass.getEditText().getText().toString().trim();
-
                 if(validateEmail && validatePass){
-                    Boolean login = false;
-                    TinyDB tinydb = new TinyDB(getApplicationContext());
-
-                    UserArray.akunuser = tinydb.getListUser("akunuser");
-                    for (int i = 0; i < UserArray.akunuser.size(); i++){
-                        User tempUser = UserArray.akunuser.get(i);
-                        if(tempUser.getEmail().equalsIgnoreCase(email) && tempUser.getPassword().equals(password)){
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            intent.putExtra("IDuser", tempUser);
-                            UserArray.currentUser = tempUser;
-                            startActivity(intent);
-                            finish();
-                            Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
-                            login=true;
-                        }
-                    }
-                    if(!login){
-                        Toast.makeText(getApplicationContext(), "Unabled to Login, Wrong email/password", Toast.LENGTH_SHORT).show();
-                    }
+                    loginDB(getApplicationContext());
                 }else {
                     login_textInput_email.setError("Please correct the email column");
                     login_textInput_pass.setError("Please correct the password column");
@@ -145,5 +137,63 @@ public class Login extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void loginDB(Context context) {
+        String url = "http://192.168.100.18/vesting_webservice/read_user.php";
+
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject objUser = jsonObject.getJSONObject("user");
+
+                    User user = new User();
+                    user.setId(objUser.getInt("user_id"));
+                    user.setNama(objUser.getString("name"));
+
+                    UserArray.currentUser = user;
+
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    prefs.edit().putBoolean("loggedIn", true).apply();
+                    prefs.edit().putInt("id", objUser.getInt("user_id")).apply();
+                    prefs.edit().putString("nama", objUser.getString("name")).apply();
+                    Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
+                }catch (JSONException err){
+                    Toast.makeText(getApplicationContext(), "Unabled to Login, Wrong email/password", Toast.LENGTH_SHORT).show();
+                    err.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("email", login_textInput_email.getEditText().getText().toString().trim());
+                params.put("password", login_textInput_pass.getEditText().getText().toString().trim());
+
+                return params;
+            }
+        };
+
+        mQueue.add(request);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class User implements Parcelable{
+    private int id;
     private String nama, email, password;
     private double balance;
     private ArrayList<OwnedCompany> ownedCompanies;
@@ -14,6 +15,12 @@ public class User implements Parcelable{
         this.email = "";
         this.nama = "";
         this.password = "";
+    }
+
+    public User(String email, String nama, String password) {
+        this.email = email;
+        this.nama = nama;
+        this.password = password;
     }
 
     public User(String email, String nama, String password, ArrayList<OwnedCompany> ownedCompanies) {
@@ -88,5 +95,13 @@ public class User implements Parcelable{
         dest.writeString(nama);
         dest.writeString(email);
         dest.writeString(password);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
