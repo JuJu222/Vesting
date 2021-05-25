@@ -1,11 +1,15 @@
 package com.example.projectuas.ui.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,8 +19,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.projectuas.Login;
 import com.example.projectuas.R;
 import com.example.projectuas.SearchActivity;
+import com.example.projectuas.SplashActivity;
 import com.github.mikephil.charting.charts.CandleStickChart;
 
 import model.ListedCompany;
@@ -40,6 +46,7 @@ public class HomeFragment extends Fragment {
                 TextView homeWelcomeTextView = root.findViewById(R.id.homeWelcomeTextView);
                 TextView homePriceTextView = root.findViewById(R.id.homePriceTextView);
                 TextView homePercentageTextView = root.findViewById(R.id.homePercentageTextView);
+                ImageButton homeLogOutButton = root.findViewById(R.id.homeLogOutButton);
 
                 mQueue = Volley.newRequestQueue(getContext());
 
@@ -60,6 +67,23 @@ public class HomeFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), SearchActivity.class);
 
                         startActivity(intent);
+                    }
+                });
+
+                homeLogOutButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), Login.class);
+
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        prefs.edit().putBoolean("loggedIn", false).apply();
+                        prefs.edit().putInt("id", -1).apply();
+                        prefs.edit().putString("nama", "").apply();
+
+                        startActivity(intent);
+                        getActivity().finish();
+
+                        Toast.makeText(getContext(), "You have successfully logged out!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
