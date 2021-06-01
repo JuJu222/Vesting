@@ -156,6 +156,10 @@ public class Login extends AppCompatActivity {
                     User user = new User();
                     user.setId(objUser.getInt("user_id"));
                     user.setNama(objUser.getString("name"));
+                    user.setEmail(objUser.getString("email"));
+                    user.setBalance(objUser.getDouble("balance"));
+                    user.setPhoneNumber(objUser.getString("phone_number"));
+                    user.setAddress(objUser.getString("address"));
 
                     UserArray.currentUser = user;
 

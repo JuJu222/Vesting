@@ -1,6 +1,7 @@
 package com.example.projectuas;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -10,6 +11,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.Comparator;
 
 import model.Companies;
 import model.ListedCompany;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_portfolio, R.id.navigation_news)
+                R.id.navigation_home, R.id.navigation_portfolio, R.id.navigation_news, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
@@ -67,6 +70,29 @@ public class MainActivity extends AppCompatActivity {
         Companies.getListedCompanies().add(new ListedCompany("WBA"));
         Companies.getListedCompanies().add(new ListedCompany("WMT"));
         Companies.getListedCompanies().add(new ListedCompany("DIS"));
+        Companies.getListedCompanies().add(new ListedCompany("ABMD"));
+        Companies.getListedCompanies().add(new ListedCompany("ABT"));
+        Companies.getListedCompanies().add(new ListedCompany("ABBV"));
+        Companies.getListedCompanies().add(new ListedCompany("ADBE"));
+        Companies.getListedCompanies().add(new ListedCompany("AMD"));
+        Companies.getListedCompanies().add(new ListedCompany("T"));
+        Companies.getListedCompanies().add(new ListedCompany("BBY"));
+        Companies.getListedCompanies().add(new ListedCompany("BAC"));
+        Companies.getListedCompanies().add(new ListedCompany("BA"));
+        Companies.getListedCompanies().add(new ListedCompany("KO"));
+        Companies.getListedCompanies().add(new ListedCompany("EBAY"));
+        Companies.getListedCompanies().add(new ListedCompany("EA"));
+        Companies.getListedCompanies().add(new ListedCompany("EQIX"));
+        Companies.getListedCompanies().add(new ListedCompany("FB"));
+        Companies.getListedCompanies().add(new ListedCompany("MAR"));
+        Companies.getListedCompanies().add(new ListedCompany("MCHP"));
+        Companies.getListedCompanies().add(new ListedCompany("WRK"));
+        Companies.getListedCompanies().add(new ListedCompany("XYL"));
+        Companies.getListedCompanies().add(new ListedCompany("ZBRA"));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Companies.getListedCompanies().sort(Comparator.comparing(ListedCompany::getCompanySymbol));
+        }
     }
 
 }

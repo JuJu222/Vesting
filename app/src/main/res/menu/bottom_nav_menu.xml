@@ -15,4 +15,9 @@
         android:icon="@drawable/ic_earth"
         android:title="@string/title_news" />
 
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_user"
+        android:title="@string/title_profile" />
+
 </menu>
