@@ -4,6 +4,7 @@ header("Content-Type: application/json");
 
 if (!empty($_POST)) {
     $symbol = $_POST["symbol"];
+    $lots = $_POST["lots"];
     $price = $_POST["price"];
     $user_id = $_POST["user_id"];
     $balance = $_POST["balance"];
@@ -15,10 +16,10 @@ if (!empty($_POST)) {
 
     if ($result->num_rows > 0) {
         $result = $result->fetch_assoc();
-        $lots = $result["lots"] + 1;
+        $lotsA = $result["lots"] + $lots;
         $price = ($result["price"] + $price) / 2;
         $query1 = $conn->prepare("UPDATE `portfolio` SET lots = ?, price = ? WHERE symbol = ?");
-        $query1->bind_param("ids", $lots, $price, $symbol);
+        $query1->bind_param("ids", $lotsA, $price, $symbol);
         $result1 = $query1->execute();
 
         $query2 = $conn->prepare("UPDATE `users` SET balance = ? WHERE user_id = ?");
@@ -30,8 +31,8 @@ if (!empty($_POST)) {
             $response["message"] = "Failed to save";
         }
     } else {
-        $query1 = $conn->prepare("INSERT INTO portfolio (symbol, lots, price, user_id) VALUES (?, 1, ?, ?)");
-        $query1->bind_param("sdi", $symbol, $price, $user_id);
+        $query1 = $conn->prepare("INSERT INTO portfolio (symbol, lots, price, user_id) VALUES (?, ?, ?, ?)");
+        $query1->bind_param("sidi", $symbol, $lots, $price, $user_id);
         $result1 = $query1->execute();
 
         $query2 = $conn->prepare("UPDATE `users` SET balance = ? WHERE user_id = ?");

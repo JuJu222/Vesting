@@ -3,15 +3,13 @@ require_once "db_controller.php";
 header("Content-Type: application/json");
 
 if (!empty($_POST)) {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $user_id = $_POST["user_id"];
 } else {
-    $email = "";
-    $password = "";
+    $user_id = -1;
 }
 
-$query = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-$query->bind_param("ss", $email, $password);
+$query = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+$query->bind_param("i", $user_id);
 $query->execute();
 
 $result = $query->get_result();
