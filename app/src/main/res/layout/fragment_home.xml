@@ -20,18 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/homeLogOutButton"
-        android:layout_width="53dp"
-        android:layout_height="52dp"
-        android:backgroundTint="#000000"
-        android:scaleType="centerCrop"
-        android:tint="#B90000"
-        app:layout_constraintBottom_toBottomOf="@+id/homeWelcomeTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/homeWelcomeTextView"
-        app:srcCompat="@drawable/logout" />
-
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
