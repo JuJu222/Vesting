@@ -9,6 +9,8 @@ import android.graphics.PorterDuff;
 import android.graphics.text.LineBreaker;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.CandleStickChart;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +36,9 @@ import model.VolleyCallback;
 
 public class CompanyActivity extends AppCompatActivity {
     RequestQueue mQueue;
-    boolean exists = false;
+    boolean textFilled = false;
+    boolean ongoingReq = false;
+    TextInputLayout companyLotsTextInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class CompanyActivity extends AppCompatActivity {
         TextView companyPayoutRatioTextView = findViewById(R.id.companyPayoutRatioTextView);
         TextView companyEmployeesView = findViewById(R.id.companyEmployeesView);
         Button companyBuyButton = findViewById(R.id.companyBuyButton);
+        companyLotsTextInputLayout = findViewById(R.id.companyLotsTextInputLayout);
 
         Stocks stocks = new Stocks();
         Intent intent = getIntent();
@@ -72,7 +78,38 @@ public class CompanyActivity extends AppCompatActivity {
         stocks.setCompanyChart(this, mQueue, listedCompany, companyChart, companyNameTextView, companyCurrentPriceTextView, companyPriceChangeTextView,
                 companyDescriptionTextView, companySectorTextView, companyPeRatioTextView,
                 companyPegRatioTextView, companyLastDividendDateTextView, companyEmployeesView,
-                companyAnalystTargetPriceTextView, companyPbRatioTextView, companyPayoutRatioTextView, companyBuyButton);
+                companyAnalystTargetPriceTextView, companyPbRatioTextView, companyPayoutRatioTextView, companyBuyButton, companyLotsTextInputLayout);
+
+        companyLotsTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (companyLotsTextInputLayout.getEditText().getText().toString().isEmpty()) {
+                    textFilled = false;
+                } else {
+                    textFilled = true;
+                }
+
+                if (textFilled && !ongoingReq) {
+                    companyBuyButton.getBackground().setColorFilter(null);
+                    companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
+                    companyBuyButton.setEnabled(true);
+                } else {
+                    companyBuyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+                    companyBuyButton.setBackgroundColor(Color.parseColor("#808080"));
+                    companyBuyButton.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         companyBuyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,18 +117,26 @@ public class CompanyActivity extends AppCompatActivity {
                 companyBuyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
                 companyBuyButton.setBackgroundColor(Color.parseColor("#808080"));
                 companyBuyButton.setEnabled(false);
+                ongoingReq = true;
                 RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
                 stocks.getCurrentPrice(mQueue, listedCompany.getCompanySymbol(), new VolleyCallback(){
                     @Override
                     public void onSuccess(String result){
-                        companyBuyButton.getBackground().setColorFilter(null);
-                        companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
-                        companyBuyButton.setEnabled(true);
-                        UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() - Double.parseDouble(result));
+                        ongoingReq = false;
+                        if (textFilled) {
+                            companyBuyButton.getBackground().setColorFilter(null);
+                            companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
+                            companyBuyButton.setEnabled(true);
+                        } else {
+                            companyBuyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+                            companyBuyButton.setBackgroundColor(Color.parseColor("#808080"));
+                            companyBuyButton.setEnabled(false);
+                        }
+                        UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() - (Double.parseDouble(result) * Double.parseDouble(companyLotsTextInputLayout.getEditText().getText().toString())));
                         
                         buyPortfolioDB(listedCompany, getApplicationContext());
 
-                        Toast.makeText(getApplicationContext(), "Bought 1 lot of " + listedCompany.getCompanySymbol() + " for " + listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Bought " + companyLotsTextInputLayout.getEditText().getText().toString() + " lot of " + listedCompany.getCompanySymbol() + " for " + listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -124,6 +169,7 @@ public class CompanyActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("symbol", listedCompany.getCompanySymbol());
+                params.put("lots", companyLotsTextInputLayout.getEditText().getText().toString());
                 params.put("price", String.valueOf(listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose()));
                 params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
                 params.put("balance", String.valueOf(UserArray.currentUser.getBalance()));

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class User implements Parcelable{
     private int id;
-    private String nama, email, password;
+    private String nama, email, password, phoneNumber, address;
     private double balance;
     private ArrayList<OwnedCompany> ownedCompanies;
 
@@ -79,6 +79,22 @@ public class User implements Parcelable{
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public ArrayList<OwnedCompany> getOwnedCompanies() {
