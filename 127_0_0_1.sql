@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2021 at 12:06 PM
+-- Generation Time: Jun 01, 2021 at 07:36 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -43,7 +43,8 @@ CREATE TABLE `portfolio` (
 
 INSERT INTO `portfolio` (`portfolio_id`, `symbol`, `lots`, `price`, `user_id`) VALUES
 (34, 'AXP', 1, 156.93, 13),
-(35, 'AMGN', 1, 251.01, 13);
+(35, 'AMGN', 2, 238.25, 13),
+(36, 'MMM', 1, 201.91, 1);
 
 -- --------------------------------------------------------
 
@@ -56,18 +57,20 @@ CREATE TABLE `users` (
   `name` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `balance` float NOT NULL DEFAULT 10000
+  `balance` float NOT NULL DEFAULT 10000,
+  `phone_number` varchar(30) NOT NULL,
+  `address` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `balance`) VALUES
-(1, 'db', 'db@gmail.com', 'dbdb', 9843.08),
-(13, 'justin', 'justin@gmail.com', 'justin', 10066.6),
-(20, 'aaaa', 'a@gmail.com', 'aaaa', 10000),
-(21, 'xxxx', 'x@gmail.com', 'xxxx', 10000);
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `balance`, `phone_number`, `address`) VALUES
+(1, 'db', 'db@gmail.com', 'dbdb', 13762.9, 'a', 'a'),
+(13, 'justin', 'justin@gmail.com', 'justin', 10000, 'a', 'a'),
+(20, 'aaaa', 'a@gmail.com', 'aaaa', 10000, '', ''),
+(21, 'xxxx', 'x@gmail.com', 'xxxx', 10000, '', '');
 
 --
 -- Indexes for dumped tables
@@ -95,7 +98,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  MODIFY `portfolio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `portfolio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `users`
