@@ -25,8 +25,6 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent;
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 if (prefs.getBoolean("loggedIn", false)) {
-                    System.out.println(prefs.getInt("id", -1));
-                    System.out.println(prefs.getString("nama", ""));
                     UserArray.currentUser.setId(prefs.getInt("id", -1));
                     UserArray.currentUser.setNama(prefs.getString("nama", ""));
                     intent = new Intent(SplashActivity.this, MainActivity.class);

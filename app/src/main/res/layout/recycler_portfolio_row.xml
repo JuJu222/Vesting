@@ -27,6 +27,29 @@
             android:layout_height="match_parent"
             android:paddingBottom="16dp">
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/portfolioRowLotsTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:textColorHint="#FFFFFF"
+                app:boxStrokeColor="#FFFFFF"
+                app:hintTextColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/portfolioRowSellButton"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lots"
+                    android:inputType="number"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <View
                 android:id="@+id/divider"
                 android:layout_width="0dp"
@@ -37,17 +60,17 @@
                 android:foregroundTint="#5B9CE2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/portfolioRowTextView"
-                app:layout_constraintTop_toBottomOf="@+id/portfolioRowTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/portfolioRowLotsTextInputLayout" />
 
             <TextView
                 android:id="@+id/portfolioRowTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,13 +78,13 @@
                 android:id="@+id/portfolioRowPercentageChange"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="right"
+                android:layout_marginStart="8dp"
+                android:gravity="left"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/portfolioRowTextView"
+                app:layout_constraintStart_toEndOf="@+id/portfolioRowTextView"
+                app:layout_constraintTop_toTopOf="@+id/portfolioRowTextView" />
 
             <TextView
                 android:id="@+id/portfolioRowJumlahLotTextView"
@@ -143,12 +166,12 @@
                 android:id="@+id/portfolioRowSellButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="#980000"
                 android:text="SELL"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider" />
+                app:layout_constraintTop_toTopOf="@+id/portfolioRowTextView3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

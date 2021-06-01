@@ -49,30 +49,20 @@ public class PortfolioFragment extends Fragment {
     private TextView portfolioBalanceTextView;
     private TextView portfolioEquityTextView;
 
-    private PortfolioViewModel portfolioViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        portfolioViewModel =
-                new ViewModelProvider(this).get(PortfolioViewModel.class);
         View root = inflater.inflate(R.layout.fragment_portfolio, container, false);
-        portfolioViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-//                dataOwnedCompany = UserArray.currentUser.getOwnedCompanies();
-                loadDataDB(getContext());
+        loadDataDB(getContext());
 
-                portfolioRecyclerView = root.findViewById(R.id.portfolioRecyclerView);
-                portfolioBalanceTextView = root.findViewById(R.id.portfolioBalanceTextView);
-                portfolioEquityTextView = root.findViewById(R.id.portfolioEquityTextView);
+        portfolioRecyclerView = root.findViewById(R.id.portfolioRecyclerView);
+        portfolioBalanceTextView = root.findViewById(R.id.portfolioBalanceTextView);
+        portfolioEquityTextView = root.findViewById(R.id.portfolioEquityTextView);
 
-                portfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(dataOwnedCompany, portfolioBalanceTextView, portfolioEquityTextView);
+        portfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(dataOwnedCompany, portfolioBalanceTextView, portfolioEquityTextView);
 
-                RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-                portfolioRecyclerView.setLayoutManager(manager);
-                portfolioRecyclerView.setAdapter(portfolioRecyclerViewAdapter);
-            }
-        });
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+        portfolioRecyclerView.setLayoutManager(manager);
+        portfolioRecyclerView.setAdapter(portfolioRecyclerViewAdapter);
         return root;
     }
 
