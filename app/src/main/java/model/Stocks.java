@@ -35,14 +35,13 @@ public class Stocks {
     public void setCompanyChart(Context context, RequestQueue mQueue, ListedCompany listedCompany, CandleStickChart chart, TextView companyName,
                                    TextView currentPrice, TextView priceChange, TextView description, TextView sector, TextView peRatio,
                                    TextView pegRatio, TextView lastDividend, TextView employees, TextView analystTargetPrice,
-                                   TextView pbRatio, TextView payoutRatio, Button button, TextInputLayout textInputLayout) {
+                                   TextView pbRatio, TextView payoutRatio, Button button) {
         String url1 = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + listedCompany.getCompanySymbol() + "&interval=5min&outputsize=full&apikey=34V7BYNBX3LSQ79T";
         String url2 = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=" + listedCompany.getCompanySymbol() + "&apikey=34V7BYNBX3LSQ79T";
 
         button.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         button.setBackgroundColor(Color.parseColor("#808080"));
         button.setEnabled(false);
-        textInputLayout.setEnabled(false);
 
         DecimalFormat df = new DecimalFormat("#.##");
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null,
@@ -94,9 +93,11 @@ public class Stocks {
                                 priceChange.setTextColor(Color.WHITE);
                             }
                             priceChange.setText(priceChangeString);
-                            textInputLayout.setEnabled(true);
 
                             displayChart(listedCompany, chart);
+                            button.getBackground().setColorFilter(null);
+                            button.setBackgroundColor(Color.parseColor("#41A03A"));
+                            button.setEnabled(true);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(context, "API on cool down! Please wait 1 minute", Toast.LENGTH_SHORT).show();
