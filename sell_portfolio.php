@@ -8,6 +8,7 @@ if (!empty($_POST)) {
     $price = $_POST["price"];
     $user_id = $_POST["user_id"];
     $balance = $_POST["balance"];
+    $value = $lots * $price;
 
     $query = $conn->prepare("SELECT * FROM portfolio WHERE symbol = ? && user_id = ?");
     $query->bind_param("si", $symbol, $user_id);
@@ -33,8 +34,11 @@ if (!empty($_POST)) {
                 $response["message"] = "Failed to save";
             }
         } else {
-            $query1 = $conn->prepare("UPDATE `portfolio` SET lots = ?, price = ? WHERE symbol = ?");
-            $query1->bind_param("ids", $lotsA, $price, $symbol);
+            $value = $result["value"] - ($result["price"] * $lots);
+            $price = $value / $lotsA;
+
+            $query1 = $conn->prepare("UPDATE `portfolio` SET lots = ?, value = ?, price = ? WHERE symbol = ?");
+            $query1->bind_param("idds", $lotsA, $value, $price, $symbol);
             $result1 = $query1->execute();
 
             $query2 = $conn->prepare("UPDATE `users` SET balance = ? WHERE user_id = ?");
