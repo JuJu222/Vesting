@@ -181,6 +181,7 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
             public void onResponse(String response) {
                 Toast.makeText(holder.portfolioRowAveragePriceTextView.getContext(), "Sold " + Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString()) + " lot of " + ownedCompanyArrayList.get(position).getCompanySymbol() + " for " + holder.portfolioRowCurrentPriceTextView.getText().toString(), Toast.LENGTH_SHORT).show();
                 ownedCompanyArrayList.get(position).setLots(ownedCompanyArrayList.get(position).getLots() - Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString()));
+                holder.portfolioRowLotsTextInputLayout.getEditText().setText("");
                 DecimalFormat df = new DecimalFormat("#.##");
                 String temp = "$" + df.format(UserArray.currentUser.getBalance());
                 portfolioBalanceTextView.setText(temp);

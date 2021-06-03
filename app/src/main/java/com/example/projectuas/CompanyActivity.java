@@ -94,7 +94,9 @@ public class CompanyActivity extends AppCompatActivity {
                     textFilled = true;
                 }
 
-                if (textFilled && !ongoingReq) {
+                if (textFilled && !ongoingReq && Integer.parseInt(companyLotsTextInputLayout.getEditText().getText().toString()) > 0
+                && listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose() *
+                        Integer.parseInt(companyLotsTextInputLayout.getEditText().getText().toString()) <= UserArray.currentUser.getBalance()) {
                     companyBuyButton.getBackground().setColorFilter(null);
                     companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
                     companyBuyButton.setEnabled(true);
@@ -152,6 +154,7 @@ public class CompanyActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
+                companyLotsTextInputLayout.getEditText().setText("");
             }
         }, new Response.ErrorListener() {
             @Override

@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +80,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 params.put("balance", editProfileBalanceTextInputLayout.getEditText().getText().toString());
                 params.put("phone_number", editProfilePhoneNumberTextInputLayout.getEditText().getText().toString());
                 params.put("address", editProfileAddressTextInputLayout.getEditText().getText().toString());
+
+                DecimalFormat df = new DecimalFormat("#.##");
+                String temp = df.format(Double.parseDouble(editProfileBalanceTextInputLayout.getEditText().getText().toString()));
+                UserArray.currentUser.setBalance(Double.parseDouble(temp));
 
                 return params;
             }
