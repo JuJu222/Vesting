@@ -1,9 +1,16 @@
 package com.example.projectuas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +19,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.Companies;
 import model.ListedCompany;
 import model.User;
+import model.UserArray;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,6 +106,51 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Companies.getListedCompanies().sort(Comparator.comparing(ListedCompany::getCompanySymbol));
         }
+
+        dataDB(this);
+    }
+
+    public void dataDB(Context context) {
+        String url = "http://192.168.100.18/vesting_webservice/read_user_by_id.php";
+
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject objUser = jsonObject.getJSONObject("user");
+
+                    UserArray.currentUser.setBalance(objUser.getDouble("balance"));
+                } catch (JSONException err) {
+                    err.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
+
+                return params;
+            }
+        };
+
+        mQueue.add(request);
     }
 
 }
