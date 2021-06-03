@@ -75,15 +75,14 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-
-                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
-                params.put("balance", editProfileBalanceTextInputLayout.getEditText().getText().toString());
-                params.put("phone_number", editProfilePhoneNumberTextInputLayout.getEditText().getText().toString());
-                params.put("address", editProfileAddressTextInputLayout.getEditText().getText().toString());
-
                 DecimalFormat df = new DecimalFormat("#.##");
                 String temp = df.format(Double.parseDouble(editProfileBalanceTextInputLayout.getEditText().getText().toString()));
                 UserArray.currentUser.setBalance(Double.parseDouble(temp));
+
+                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
+                params.put("balance", temp);
+                params.put("phone_number", editProfilePhoneNumberTextInputLayout.getEditText().getText().toString());
+                params.put("address", editProfileAddressTextInputLayout.getEditText().getText().toString());
 
                 return params;
             }
