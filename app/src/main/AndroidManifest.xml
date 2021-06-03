@@ -12,11 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectUAS"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".BuyActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
         <activity android:name=".CompanyActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main2"></activity>
+            android:label="@string/title_activity_main2" />
         <activity android:name=".SearchActivity" />
         <activity
             android:name=".SplashActivity"
