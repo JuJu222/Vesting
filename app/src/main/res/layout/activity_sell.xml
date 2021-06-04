@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".BuyActivity">
+    tools:context=".SellActivity">
 
     <TextView
         android:id="@+id/homeWelcomeTextView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Balance"
+        android:text="Lots Owned"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -21,10 +21,10 @@
         app:layout_constraintTop_toTopOf="@+id/divider2" />
 
     <TextView
-        android:id="@+id/buyBalanceTextView"
+        android:id="@+id/sellLotsOwnedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Balance"
+        android:text="Lots Owned"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/homeWelcomeTextView6"
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Total Cost"
+        android:text="Proceed Amount"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -45,10 +45,10 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <TextView
-        android:id="@+id/buyTotalCostTextView"
+        android:id="@+id/sellProceedAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Cost"
+        android:text="Proceed Amount"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/homeWelcomeTextView9"
@@ -60,19 +60,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Remaining Balance"
+        android:text="Total Balance"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyTotalCostTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/sellProceedAmountTextView" />
 
     <TextView
-        android:id="@+id/buyRemainingBalanceTextView"
+        android:id="@+id/sellTotalBalanceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remaining Balance"
+        android:text="Total Balance"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/homeWelcomeTextView10"
@@ -93,7 +93,7 @@
         app:layout_constraintTop_toTopOf="@+id/divider2" />
 
     <TextView
-        android:id="@+id/buyCurrentPriceTextView"
+        android:id="@+id/sellCurrentPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current Price"
@@ -104,12 +104,12 @@
         app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView8" />
 
     <TextView
-        android:id="@+id/buySymbolTextView"
+        android:id="@+id/sellSymbolTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Buy"
+        android:text="Sell"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -124,11 +124,11 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buySymbolTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/sellSymbolTextView" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/buyLotsTextInputLayout"
+        android:id="@+id/sellLotsTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -139,7 +139,7 @@
         app:hintTextColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyRemainingBalanceTextView">
+        app:layout_constraintTop_toBottomOf="@+id/sellTotalBalanceTextView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -151,14 +151,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/buyButton"
+        android:id="@+id/sellButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="BUY"
+        android:backgroundTint="#980000"
+        android:text="SELL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyLotsTextInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/sellLotsTextInputLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
