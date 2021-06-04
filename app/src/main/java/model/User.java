@@ -23,12 +23,14 @@ public class User implements Parcelable{
         this.password = password;
     }
 
-    public User(String email, String nama, String password, ArrayList<OwnedCompany> ownedCompanies) {
+    public User(String email, String nama, String password, String phoneNumber, String address, ArrayList<OwnedCompany> ownedCompanies) {
         this.email = email;
         this.nama = nama;
         this.password = password;
         this.balance = 10000.00;
         this.ownedCompanies = ownedCompanies;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     protected User(Parcel in) {
@@ -111,6 +113,8 @@ public class User implements Parcelable{
         dest.writeString(nama);
         dest.writeString(email);
         dest.writeString(password);
+        dest.writeString(phoneNumber);
+        dest.writeString(address);
     }
 
     public int getId() {
