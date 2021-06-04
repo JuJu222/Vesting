@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,13 +22,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import model.User;
 import model.UserArray;
 
 public class Register extends AppCompatActivity {
 
-    private TextInputLayout signup_textInput_email, signup_textInput_name, signup_textInput_pass;
+    private TextInputLayout signup_textInput_email, signup_textInput_name, signup_textInput_pass, signup_textInput_phone, signup_textInput_address;
     private Button signup_button_Signup, signup_button_Login;
 
     @Override
@@ -39,6 +42,8 @@ public class Register extends AppCompatActivity {
         signup_textInput_pass = findViewById(R.id.signup_textInput_pass);
         signup_button_Login = findViewById(R.id.signup_button_Login);
         signup_button_Signup = findViewById(R.id.signup_button_Signup);
+        signup_textInput_phone = findViewById(R.id.signup_textInput_phone);
+        signup_textInput_address = findViewById(R.id.signup_textInput_address);
 
         signup_button_Signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,32 +51,153 @@ public class Register extends AppCompatActivity {
                 String email = signup_textInput_email.getEditText().getText().toString().trim();
                 String nama = signup_textInput_name.getEditText().getText().toString().trim();
                 String password = signup_textInput_pass.getEditText().getText().toString().trim();
-                if(email.isEmpty()){
-                    signup_textInput_email.setError("Please fill the email column");
-                }else{
-                    signup_textInput_email.setError("");
-                }
-                if(nama.isEmpty()){
-                    signup_textInput_name.setError("please fill the name column");
-                }else{
-                    signup_textInput_name.setError("");
-                }
-                if(password.isEmpty()){
-                    signup_textInput_pass.setError("please fill the password column");
-                }else{
-                    signup_textInput_pass.setError("");
-                }
+                String phone = signup_textInput_phone.getEditText().getText().toString().trim();
+                String address = signup_textInput_address.getEditText().getText().toString().trim();
 
-                if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty()){
+                signup_textInput_email.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        String email = signup_textInput_email.getEditText().getText().toString().trim();
+
+                        Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile("[a-zA-Z0-9+._%-+]{1,256}" + "@"
+                                + "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" + "(" + "."
+                                + "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" + ")+");
+
+                        if(email.isEmpty()){
+                            signup_textInput_email.setError("Please fill the email column");
+                        }else{
+                            if(!EMAIL_ADDRESS_PATTERN.matcher(email).matches()){
+                                signup_textInput_email.setError("Wrong format email");
+                            }else{
+                                signup_textInput_email.setError("");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                signup_textInput_name.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        String nama = signup_textInput_name.getEditText().getText().toString().trim();
+
+                        if(nama.isEmpty()){
+                            signup_textInput_name.setError("please fill the name column");
+                        }else{
+                            signup_textInput_name.setError("");
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                signup_textInput_pass.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        String password = signup_textInput_pass.getEditText().getText().toString().trim();
+
+                        Pattern PASSWORD_PATTERN = Pattern.compile("[a-zA-Z0-9\\!\\@\\#\\$]{0,20}");
+
+                        if (password.isEmpty()){
+                            signup_textInput_pass.setError("Please fill the password column");
+                        }else{
+                            if (password.length() < 4 || password.length() > 20){
+                                signup_textInput_pass.setError("Password must be 4 to 20 characters");
+                            }else if (!PASSWORD_PATTERN.matcher(password).matches()){
+                                signup_textInput_pass.setError("Must contain a - z, A - Z, !, @, #, $");
+                            }else{
+                                signup_textInput_pass.setError("");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                signup_textInput_phone.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        String phone = signup_textInput_phone.getEditText().getText().toString().trim();
+
+                        if(phone.isEmpty()){
+                            signup_textInput_pass.setError("please fill the password column");
+                        }else{
+                            if(phone.length()<7 || phone.length() >15){
+                                signup_textInput_pass.setError("Phone number must be 7 to 15 digits");
+                            }else{
+                                signup_textInput_phone.setError("");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                signup_textInput_address.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        String address = signup_textInput_address.getEditText().getText().toString().trim();
+
+                        if(address.isEmpty()){
+                            signup_textInput_pass.setError("please fill the password column");
+                        }else{
+                            signup_textInput_pass.setError("");
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty() && phone.isEmpty() && address.isEmpty()){
                     Intent intent = new Intent(Register.this, MainActivity.class);
-                    User user = new User(email, nama, password, new ArrayList<>());
+                    User user = new User(email, nama, password, phone, address, new ArrayList<>());
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
                         if(user.getEmail().equalsIgnoreCase(UserArray.akunuser.get(i).getEmail())){
                             Toast.makeText(getBaseContext(), "Email is already Registered!", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
-
                     addDataDB(getApplicationContext());
                 }
             }
