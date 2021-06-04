@@ -58,12 +58,33 @@ public class PortfolioFragment extends Fragment {
         portfolioBalanceTextView = root.findViewById(R.id.portfolioBalanceTextView);
         portfolioEquityTextView = root.findViewById(R.id.portfolioEquityTextView);
 
-        portfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(dataOwnedCompany, portfolioBalanceTextView, portfolioEquityTextView);
+        portfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(this, dataOwnedCompany, portfolioBalanceTextView, portfolioEquityTextView);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         portfolioRecyclerView.setLayoutManager(manager);
         portfolioRecyclerView.setAdapter(portfolioRecyclerViewAdapter);
         return root;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == 1) {
+                int position = data.getIntExtra("position", -1);
+                int lots = data.getIntExtra("lots", 0);
+
+                dataOwnedCompany.get(position).setLots(dataOwnedCompany.get(position).getLots() - lots);
+                DecimalFormat df = new DecimalFormat("#.##");
+                String temp = "$" + df.format(UserArray.currentUser.getBalance());
+                portfolioBalanceTextView.setText(temp);
+                if (dataOwnedCompany.get(position).getLots() == 0) {
+                    dataOwnedCompany.remove(position);
+                }
+                portfolioRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private void loadDataDB(Context context) {

@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectUAS"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BuyActivity"></activity>
+        <activity android:name=".SellActivity"></activity>
+        <activity android:name=".BuyActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".CompanyActivity" />
         <activity

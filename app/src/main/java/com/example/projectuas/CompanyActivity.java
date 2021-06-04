@@ -85,7 +85,6 @@ public class CompanyActivity extends AppCompatActivity {
                 intent1.putExtra("symbol", listedCompany.getCompanySymbol());
                 intent1.putExtra("currentPrice", listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose());
                 startActivity(intent1);
-
             }
         });
     }
