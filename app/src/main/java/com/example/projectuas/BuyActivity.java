@@ -34,6 +34,7 @@ import model.VolleyCallback;
 
 public class BuyActivity extends AppCompatActivity {
     String symbol;
+    String temp;
     double currentPrice;
     TextInputLayout buyLotsTextInputLayout;
 
@@ -58,12 +59,14 @@ public class BuyActivity extends AppCompatActivity {
         buyButton.setBackgroundColor(Color.parseColor("#808080"));
         buyButton.setEnabled(false);
         DecimalFormat df = new DecimalFormat("#.##");
-        String temp = "Buy " + symbol;
+        temp = "Buy " + symbol;
         buySymbolTextView.setText(temp);
-        buyCurrentPriceTextView.setText(df.format(currentPrice));
-        buyBalanceTextView.setText(df.format(UserArray.currentUser.getBalance()));
+        temp = "$" + df.format(currentPrice);
+        buyCurrentPriceTextView.setText(temp);
+        temp = "$" + df.format(UserArray.currentUser.getBalance());
+        buyBalanceTextView.setText(temp);
         buyTotalCostTextView.setText("-");
-        buyRemainingBalanceTextView.setText(df.format(UserArray.currentUser.getBalance()));
+        buyRemainingBalanceTextView.setText(temp);
 
         buyLotsTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,18 +90,25 @@ public class BuyActivity extends AppCompatActivity {
                         buyButton.setBackgroundColor(Color.parseColor("#41A03A"));
                         buyButton.setEnabled(true);
 
-                        buyTotalCostTextView.setText(df.format(totalCost));
-                        buyRemainingBalanceTextView.setText(df.format(remainingBalance));
+                        temp = "$" + df.format(totalCost);
+                        buyTotalCostTextView.setText(temp);
+                        temp = "$" + df.format(remainingBalance);
+                        buyRemainingBalanceTextView.setText(temp);
                     } else {
                         buyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
                         buyButton.setBackgroundColor(Color.parseColor("#808080"));
                         buyButton.setEnabled(false);
 
-                        buyTotalCostTextView.setText(df.format(totalCost));
+                        if (Integer.parseInt(buyLotsTextInputLayout.getEditText().getText().toString()) < 1) {
+                            buyTotalCostTextView.setText("-");
+                        } else {
+                            buyTotalCostTextView.setText("Not Enough Balance");
+                        }
                         buyRemainingBalanceTextView.setText("-");
                     }
                 } else {
-                    buyBalanceTextView.setText(df.format(UserArray.currentUser.getBalance()));
+                    temp = "$" + df.format(UserArray.currentUser.getBalance());
+                    buyRemainingBalanceTextView.setText(temp);
                     buyTotalCostTextView.setText("-");
                 }
             }

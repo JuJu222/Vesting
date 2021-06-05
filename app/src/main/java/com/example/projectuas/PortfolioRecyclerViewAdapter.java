@@ -42,6 +42,7 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
     private TextView portfolioEquityTextView;
     private double totalCurrentValue;
     private boolean buttonClicked;
+    double priceChangeDouble;
 
     public PortfolioRecyclerViewAdapter(Fragment fragment, ArrayList<OwnedCompany> dataListedCompany, TextView portfolioBalanceTextView, TextView portfolioEquityTextView) {
         this.fragment = fragment;
@@ -83,7 +84,7 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
                     try {
                         double priceOld = ownedCompanyArrayList.get(position).getAverageBoughtPrice();
                         double priceClose = Double.parseDouble(result);
-                        double priceChangeDouble = (priceClose - priceOld) / priceOld * 100;
+                        priceChangeDouble = (priceClose - priceOld) / priceOld * 100;
                         String priceChangeString = df.format(priceChangeDouble) + "%";
                         if (priceChangeDouble > 0) {
                             priceChangeString = "+" + priceChangeString;
@@ -116,6 +117,11 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
                     intent.putExtra("symbol", ownedCompanyArrayList.get(position).getCompanySymbol());
                     intent.putExtra("lots", ownedCompanyArrayList.get(position).getLots());
                     intent.putExtra("currentPrice", Double.parseDouble(holder.portfolioRowCurrentPriceTextView.getText().toString()));
+                    intent.putExtra("averagePrice", Double.parseDouble(holder.portfolioRowAveragePriceTextView.getText().toString()));
+                    String temp = holder.portfolioRowPercentageChange.getText().toString();
+                    temp = temp.replace("%", "");
+                    temp = temp.replace("+", "");
+                    intent.putExtra("percentage", Double.parseDouble(temp));
                     intent.putExtra("position", position);
                     fragment.startActivityForResult(intent, 1);
                 }

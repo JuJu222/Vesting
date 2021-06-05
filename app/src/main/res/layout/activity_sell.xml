@@ -45,6 +45,35 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <TextView
+        android:id="@+id/homeWelcomeTextView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="P/L Amount"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/homeWelcomeTextView12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sellProceedAmountTextView" />
+
+    <TextView
+        android:id="@+id/homeWelcomeTextView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="P/L Percentage"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/homeWelcomeTextView11"
+        app:layout_constraintTop_toBottomOf="@+id/sellProceedAmountTextView" />
+
+    <TextView
         android:id="@+id/sellProceedAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +83,28 @@
         app:layout_constraintEnd_toEndOf="@+id/homeWelcomeTextView9"
         app:layout_constraintStart_toStartOf="@+id/homeWelcomeTextView9"
         app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView9" />
+
+    <TextView
+        android:id="@+id/sellPlAmountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="P/L Amount"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/homeWelcomeTextView11"
+        app:layout_constraintStart_toStartOf="@+id/homeWelcomeTextView11"
+        app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView11" />
+
+    <TextView
+        android:id="@+id/sellPlPercentageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="P/L Percentage"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/homeWelcomeTextView12"
+        app:layout_constraintStart_toStartOf="@+id/homeWelcomeTextView12"
+        app:layout_constraintTop_toBottomOf="@+id/homeWelcomeTextView12" />
 
     <TextView
         android:id="@+id/homeWelcomeTextView10"
@@ -66,7 +117,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sellProceedAmountTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/sellPlAmountTextView" />
 
     <TextView
         android:id="@+id/sellTotalBalanceTextView"
@@ -127,8 +178,8 @@
         app:layout_constraintTop_toBottomOf="@+id/sellSymbolTextView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/sellLotsTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

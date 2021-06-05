@@ -30,9 +30,12 @@ import model.UserArray;
 
 public class SellActivity extends AppCompatActivity {
     String symbol;
+    String temp;
     double currentPrice;
+    double averagePrice;
     int position;
     int lots;
+    double percentage;
     TextInputLayout sellLotsTextInputLayout;
 
     @Override
@@ -44,6 +47,8 @@ public class SellActivity extends AppCompatActivity {
         TextView sellCurrentPriceTextView = findViewById(R.id.sellCurrentPriceTextView);
         TextView sellLotsOwnedTextView = findViewById(R.id.sellLotsOwnedTextView);
         TextView sellProceedAmountTextView = findViewById(R.id.sellProceedAmountTextView);
+        TextView sellPlAmountTextView = findViewById(R.id.sellPlAmountTextView);
+        TextView sellPlPercentageTextView = findViewById(R.id.sellPlPercentageTextView);
         TextView sellTotalBalanceTextView = findViewById(R.id.sellTotalBalanceTextView);
         sellLotsTextInputLayout = findViewById(R.id.sellLotsTextInputLayout);
         Button sellButton = findViewById(R.id.sellButton);
@@ -52,18 +57,33 @@ public class SellActivity extends AppCompatActivity {
         symbol = intent.getStringExtra("symbol");
         lots = intent.getIntExtra("lots", 0);
         currentPrice = intent.getDoubleExtra("currentPrice", 0);
+        averagePrice = intent.getDoubleExtra("averagePrice", 0);
+        percentage = intent.getDoubleExtra("percentage", 0);
         position = intent.getIntExtra("position", -1);
 
         sellButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         sellButton.setBackgroundColor(Color.parseColor("#808080"));
         sellButton.setEnabled(false);
         DecimalFormat df = new DecimalFormat("#.##");
-        String temp = "Sell " + symbol;
+        temp = "Sell " + symbol;
         sellSymbolTextView.setText(temp);
-        sellCurrentPriceTextView.setText(df.format(currentPrice));
+        temp = "$" + currentPrice;
+        sellCurrentPriceTextView.setText(temp);
         sellLotsOwnedTextView.setText(String.valueOf(lots));
         sellProceedAmountTextView.setText("-");
-        sellTotalBalanceTextView.setText(df.format(UserArray.currentUser.getBalance()));
+        sellPlAmountTextView.setText("-");
+        String percentageString = df.format(percentage) + "%";
+        if (percentage > 0) {
+            percentageString = "+" + percentageString;
+            sellPlPercentageTextView.setTextColor(Color.GREEN);
+        } else if (percentage < 0) {
+            sellPlPercentageTextView.setTextColor(Color.RED);
+        } else {
+            sellPlPercentageTextView.setTextColor(Color.WHITE);
+        }
+        sellPlPercentageTextView.setText(percentageString);
+        temp = "$" + df.format(UserArray.currentUser.getBalance());
+        sellTotalBalanceTextView.setText(temp);
 
         sellLotsTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,6 +100,7 @@ public class SellActivity extends AppCompatActivity {
                     boolean isExceedLots = Integer.parseInt(sellLotsTextInputLayout.getEditText().getText().toString()) > lots;
 
                     double proceedAmount = Integer.parseInt(sellLotsTextInputLayout.getEditText().getText().toString()) * currentPrice;
+                    double plAmount = proceedAmount - (Integer.parseInt(sellLotsTextInputLayout.getEditText().getText().toString()) * averagePrice);
                     double totalBalance = UserArray.currentUser.getBalance() + proceedAmount;
 
                     if (isAbove0 && !isExceedLots) {
@@ -87,18 +108,39 @@ public class SellActivity extends AppCompatActivity {
                         sellButton.setBackgroundColor(Color.parseColor("#41A03A"));
                         sellButton.setEnabled(true);
 
-                        sellProceedAmountTextView.setText(df.format(proceedAmount));
-                        sellTotalBalanceTextView.setText(df.format(totalBalance));
+                        String plAmountString  = "$" + df.format(plAmount);
+                        if (plAmount > 0) {
+                            plAmountString = "+" + plAmountString;
+                            sellPlAmountTextView.setTextColor(Color.GREEN);
+                        } else if (proceedAmount < 0) {
+                            sellPlAmountTextView.setTextColor(Color.RED);
+                        } else {
+                            sellPlAmountTextView.setTextColor(Color.WHITE);
+                        }
+
+                        temp = "$" + df.format(proceedAmount);
+                        sellProceedAmountTextView.setText(temp);
+                        sellPlAmountTextView.setText(plAmountString);
+                        temp = "$" + df.format(totalBalance);
+                        sellTotalBalanceTextView.setText(temp);
                     } else {
                         sellButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
                         sellButton.setBackgroundColor(Color.parseColor("#808080"));
                         sellButton.setEnabled(false);
 
-                        sellProceedAmountTextView.setText(df.format(proceedAmount));
+                        if (Integer.parseInt(sellLotsTextInputLayout.getEditText().getText().toString()) < 1) {
+                            sellProceedAmountTextView.setText("-");
+                        } else {
+                            sellProceedAmountTextView.setText("Not Enough Lots");
+                        }
                         sellTotalBalanceTextView.setText("-");
+                        sellPlAmountTextView.setText("-");
                     }
                 } else {
                     sellProceedAmountTextView.setText("-");
+                    sellPlAmountTextView.setText("-");
+                    temp = "$" + df.format(UserArray.currentUser.getBalance());
+                    sellTotalBalanceTextView.setText(temp);
                 }
             }
 
