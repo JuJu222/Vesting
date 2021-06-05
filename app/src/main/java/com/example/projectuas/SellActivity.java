@@ -112,7 +112,10 @@ public class SellActivity extends AppCompatActivity {
                         if (plAmount > 0) {
                             plAmountString = "+" + plAmountString;
                             sellPlAmountTextView.setTextColor(Color.GREEN);
-                        } else if (proceedAmount < 0) {
+                        } else if (plAmount < 0) {
+                            plAmountString = df.format(plAmount);
+                            plAmountString = plAmountString.replace("-", "");
+                            plAmountString = "-$" + plAmountString;
                             sellPlAmountTextView.setTextColor(Color.RED);
                         } else {
                             sellPlAmountTextView.setTextColor(Color.WHITE);
