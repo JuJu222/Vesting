@@ -54,141 +54,6 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
-                signup_textInput_email.getEditText().addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String email = signup_textInput_email.getEditText().getText().toString().trim();
-
-                        Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile("[a-zA-Z0-9+._%-+]{1,256}" + "@"
-                                + "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" + "(" + "."
-                                + "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" + ")+");
-
-                        if(email.isEmpty()){
-                            signup_textInput_email.setError("Please fill the email column");
-                        }else{
-                            if(!EMAIL_ADDRESS_PATTERN.matcher(email).matches()){
-                                signup_textInput_email.setError("Wrong format email");
-                            }else{
-                                signup_textInput_email.setError("");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-                signup_textInput_name.getEditText().addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String nama = signup_textInput_name.getEditText().getText().toString().trim();
-
-                        if(nama.isEmpty()){
-                            signup_textInput_name.setError("please fill the name column");
-                        }else{
-                            signup_textInput_name.setError("");
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-                signup_textInput_pass.getEditText().addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String password = signup_textInput_pass.getEditText().getText().toString().trim();
-
-                        Pattern PASSWORD_PATTERN = Pattern.compile("[a-zA-Z0-9\\!\\@\\#\\$]{0,20}");
-
-                        if (password.isEmpty()){
-                            signup_textInput_pass.setError("Please fill the password column");
-                        }else{
-                            if (password.length() < 4 || password.length() > 20){
-                                signup_textInput_pass.setError("Password must be 4 to 20 characters");
-                            }else if (!PASSWORD_PATTERN.matcher(password).matches()){
-                                signup_textInput_pass.setError("Must contain a - z, A - Z, !, @, #, $");
-                            }else{
-                                signup_textInput_pass.setError("");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-                signup_textInput_phone.getEditText().addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String phone = signup_textInput_phone.getEditText().getText().toString().trim();
-
-                        if(phone.isEmpty()){
-                            signup_textInput_pass.setError("please fill the password column");
-                        }else{
-                            if(phone.length()<7 || phone.length() >15){
-                                signup_textInput_pass.setError("Phone number must be 7 to 15 digits");
-                            }else{
-                                signup_textInput_phone.setError("");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-                signup_textInput_address.getEditText().addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String address = signup_textInput_address.getEditText().getText().toString().trim();
-
-                        if(address.isEmpty()){
-                            signup_textInput_pass.setError("please fill the password column");
-                        }else{
-                            signup_textInput_pass.setError("");
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
                 if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty() && phone.isEmpty() && address.isEmpty()){
                     Intent intent = new Intent(Register.this, MainActivity.class);
                     User user = new User(email, nama, password, phone, address, new ArrayList<>());
@@ -209,10 +74,149 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+
+        signup_textInput_email.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String email = signup_textInput_email.getEditText().getText().toString().trim();
+
+                Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile("[a-zA-Z0-9+._%-+]{1,256}" + "@"
+                        + "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" + "(" + "."
+                        + "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" + ")+");
+
+                if(email.isEmpty()){
+                    signup_textInput_email.setError("Please fill the email column");
+                }else{
+                    if(!EMAIL_ADDRESS_PATTERN.matcher(email).matches()){
+                        signup_textInput_email.setError("Wrong format email");
+                    }else{
+                        signup_textInput_email.setError("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        signup_textInput_name.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String nama = signup_textInput_name.getEditText().getText().toString().trim();
+
+                if(nama.isEmpty()){
+                    signup_textInput_name.setError("please fill the name column");
+                }else{
+                    if(nama.length() < 4 || nama.length() > 20){
+                        signup_textInput_name.setError("Username must be 4 to 20 characters");
+                    }else{
+                        signup_textInput_name.setError("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        signup_textInput_pass.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String password = signup_textInput_pass.getEditText().getText().toString().trim();
+
+                Pattern PASSWORD_PATTERN = Pattern.compile("[a-zA-Z0-9\\!\\@\\#\\$]{0,20}");
+
+                if (password.isEmpty()){
+                    signup_textInput_pass.setError("Please fill the password column");
+                }else{
+                    if (password.length() < 4 || password.length() > 20){
+                        signup_textInput_pass.setError("Password must be 4 to 20 characters");
+                    }else if (!PASSWORD_PATTERN.matcher(password).matches()){
+                        signup_textInput_pass.setError("Must contain a - z, A - Z, !, @, #, $");
+                    }else{
+                        signup_textInput_pass.setError("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        signup_textInput_phone.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String phone = signup_textInput_phone.getEditText().getText().toString().trim();
+
+                if(phone.isEmpty()){
+                    signup_textInput_pass.setError("please fill the password column");
+                }else{
+                    if(phone.length()<7 || phone.length() >15){
+                        signup_textInput_pass.setError("Phone number must be 7 to 15 digits");
+                    }else{
+                        signup_textInput_phone.setError("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        signup_textInput_address.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String address = signup_textInput_address.getEditText().getText().toString().trim();
+
+                if(address.isEmpty()){
+                    signup_textInput_pass.setError("please fill the password column");
+                }else{
+                    signup_textInput_pass.setError("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void addDataDB(Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/create_user.php";
+        String url = "http://192.168.0.146/vesting_webservice/create_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

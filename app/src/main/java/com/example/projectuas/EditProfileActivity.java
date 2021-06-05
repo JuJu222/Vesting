@@ -52,7 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserDB(Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/update_user.php";
+        String url = "http://192.168.0.146/vesting_webservice/update_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

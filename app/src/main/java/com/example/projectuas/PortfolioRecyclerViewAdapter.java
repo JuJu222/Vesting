@@ -172,7 +172,7 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
     }
 
     private void sellPortfolioDB(@NonNull PortfolioRecyclerViewAdapter.PortfolioViewHolder holder, int position, Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/sell_portfolio.php";
+        String url = "http://192.168.0.146/vesting_webservice/sell_portfolio.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
