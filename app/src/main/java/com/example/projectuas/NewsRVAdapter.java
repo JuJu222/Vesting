@@ -31,14 +31,14 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
 
     @NonNull
     @Override
-    public HolderSourceList onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycler_news_row, parent, false);
-
+    public NewsRVAdapter.HolderSourceList onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.recycler_news_row, parent, false);
         return new HolderSourceList(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HolderSourceList holder, int position) {
+    public void onBindViewHolder(@NonNull NewsRVAdapter.HolderSourceList holder, int position) {
         News news = newsSource.get(position);
         String name = news.getName();
         String author = news.getAuthor();
@@ -58,15 +58,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, NewsFragment.class);
-                intent.putExtra("name", name);
-                intent.putExtra("author", author);
-                intent.putExtra("title", title);
-                intent.putExtra("description", description);
-                intent.putExtra("url", url);
-                intent.putExtra("urlToImage", urlToImage);
-                intent.putExtra("publishedAt", publishedAt);
-                context.startActivity(intent);
+
             }
         });
     }
@@ -76,7 +68,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
         return newsSource.size();
     }
 
-    class HolderSourceList extends RecyclerView.ViewHolder{
+    public static class HolderSourceList extends RecyclerView.ViewHolder{
 
         TextView newsRowAuthor, newsRowTitle, newsRowDescription, newsRowSource, newsRowPublishedAt;
         ImageView newsRowImage;

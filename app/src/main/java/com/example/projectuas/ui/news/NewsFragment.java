@@ -42,7 +42,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_news, container, false);
-
+        newsSource = new ArrayList<>();
         loadsources();
 
         newsRecyclerView = root.findViewById(R.id.newsRecyclerView);
@@ -53,9 +53,6 @@ public class NewsFragment extends Fragment {
         return root;
     }
     private void loadsources() {
-
-        newsSource = new ArrayList<>();
-        newsSource.clear();
 
         String url = "https://newsapi.org/v2/everything?q=stocks&pageSize=20&apiKey=" + NewsAPI.API_KEY;
 
@@ -72,7 +69,7 @@ public class NewsFragment extends Fragment {
 
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                        String name = jsonObject1.getString("name");
+                        String name = jsonObject1.getJSONObject("source").getString("name");
                         String author = jsonObject1.getString("author");
                         String title = jsonObject1.getString("title");
                         String description = jsonObject1.getString("description");
@@ -99,11 +96,13 @@ public class NewsFragment extends Fragment {
                                 ""+formatDate
                         );
                         newsSource.add(model);
+                        System.out.println(newsSource.get(0).getAuthor());
+                        System.out.println(newsSource.size());
                     }
+                    newsRVAdapter.notifyDataSetChanged();
                 }
                 catch (Exception e){
-
-
+                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
