@@ -55,7 +55,7 @@ public class NewsFragment extends Fragment {
     }
     private void loadsources() {
 
-        String url = "https://newsapi.org/v2/everything?q=stocks&pageSize=20&apiKey=" + NewsAPI.API_KEY;
+        String url = "https://newsapi.org/v2/top-headlines?category=business&country=us&pageSize=20&apiKey=" + NewsAPI.API_KEY;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
