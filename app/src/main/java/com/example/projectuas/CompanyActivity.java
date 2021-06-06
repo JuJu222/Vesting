@@ -38,7 +38,6 @@ public class CompanyActivity extends AppCompatActivity {
     RequestQueue mQueue;
     boolean textFilled = false;
     boolean ongoingReq = false;
-    TextInputLayout companyLotsTextInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,6 @@ public class CompanyActivity extends AppCompatActivity {
         TextView companyPayoutRatioTextView = findViewById(R.id.companyPayoutRatioTextView);
         TextView companyEmployeesView = findViewById(R.id.companyEmployeesView);
         Button companyBuyButton = findViewById(R.id.companyBuyButton);
-        companyLotsTextInputLayout = findViewById(R.id.companyLotsTextInputLayout);
 
         Stocks stocks = new Stocks();
         Intent intent = getIntent();
@@ -78,109 +76,16 @@ public class CompanyActivity extends AppCompatActivity {
         stocks.setCompanyChart(this, mQueue, listedCompany, companyChart, companyNameTextView, companyCurrentPriceTextView, companyPriceChangeTextView,
                 companyDescriptionTextView, companySectorTextView, companyPeRatioTextView,
                 companyPegRatioTextView, companyLastDividendDateTextView, companyEmployeesView,
-                companyAnalystTargetPriceTextView, companyPbRatioTextView, companyPayoutRatioTextView, companyBuyButton, companyLotsTextInputLayout);
-
-        companyLotsTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (companyLotsTextInputLayout.getEditText().getText().toString().isEmpty()) {
-                    textFilled = false;
-                } else {
-                    textFilled = true;
-                }
-
-                if (textFilled && !ongoingReq && Integer.parseInt(companyLotsTextInputLayout.getEditText().getText().toString()) > 0
-                && listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose() *
-                        Integer.parseInt(companyLotsTextInputLayout.getEditText().getText().toString()) <= UserArray.currentUser.getBalance()) {
-                    companyBuyButton.getBackground().setColorFilter(null);
-                    companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
-                    companyBuyButton.setEnabled(true);
-                } else {
-                    companyBuyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-                    companyBuyButton.setBackgroundColor(Color.parseColor("#808080"));
-                    companyBuyButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+                companyAnalystTargetPriceTextView, companyPbRatioTextView, companyPayoutRatioTextView, companyBuyButton);
 
         companyBuyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                companyBuyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-                companyBuyButton.setBackgroundColor(Color.parseColor("#808080"));
-                companyBuyButton.setEnabled(false);
-                ongoingReq = true;
-                RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
-                stocks.getCurrentPrice(mQueue, listedCompany.getCompanySymbol(), new VolleyCallback(){
-                    @Override
-                    public void onSuccess(String result){
-                        ongoingReq = false;
-                        if (textFilled) {
-                            companyBuyButton.getBackground().setColorFilter(null);
-                            companyBuyButton.setBackgroundColor(Color.parseColor("#41A03A"));
-                            companyBuyButton.setEnabled(true);
-                        } else {
-                            companyBuyButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-                            companyBuyButton.setBackgroundColor(Color.parseColor("#808080"));
-                            companyBuyButton.setEnabled(false);
-                        }
-                        UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() - (Double.parseDouble(result) * Double.parseDouble(companyLotsTextInputLayout.getEditText().getText().toString())));
-                        
-                        buyPortfolioDB(listedCompany, getApplicationContext());
-
-                        Toast.makeText(getApplicationContext(), "Bought " + companyLotsTextInputLayout.getEditText().getText().toString() + " lot of " + listedCompany.getCompanySymbol() + " for " + listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Intent intent1 = new Intent(CompanyActivity.this, BuyActivity.class);
+                intent1.putExtra("symbol", listedCompany.getCompanySymbol());
+                intent1.putExtra("currentPrice", listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose());
+                startActivity(intent1);
             }
         });
-    }
-
-    private void buyPortfolioDB(ListedCompany listedCompany, Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/buy_portfolio.php";
-
-        RequestQueue mQueue = Volley.newRequestQueue(context);
-
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println(response);
-                companyLotsTextInputLayout.getEditText().setText("");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }){
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("symbol", listedCompany.getCompanySymbol());
-                params.put("lots", companyLotsTextInputLayout.getEditText().getText().toString());
-                params.put("price", String.valueOf(listedCompany.getCompanyStockPrices().get(listedCompany.getCompanyStockPrices().size() - 1).getPriceClose()));
-                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
-                params.put("balance", String.valueOf(UserArray.currentUser.getBalance()));
-
-                return params;
-            }
-        };
-
-        mQueue.add(request);
     }
 }

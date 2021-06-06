@@ -209,8 +209,9 @@
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="#41A03A"
                 android:text="Buy"
+                app:layout_constraintBottom_toTopOf="@+id/companyChart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/companyLotsTextInputLayout" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/companySymbolTextView"
@@ -335,29 +336,6 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/companyChart" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/companyLotsTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:textColorHint="#FFFFFF"
-                app:boxStrokeColor="#FFFFFF"
-                app:hintTextColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/companyNameTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/companyBuyButton"
-                app:layout_constraintTop_toTopOf="@+id/companySymbolTextView2">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Lots"
-                    android:inputType="number"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#FFFFFF" />
-            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

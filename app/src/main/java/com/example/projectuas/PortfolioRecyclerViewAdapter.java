@@ -1,6 +1,7 @@
 package com.example.projectuas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -34,13 +36,16 @@ import model.UserArray;
 import model.VolleyCallback;
 
 public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<PortfolioRecyclerViewAdapter.PortfolioViewHolder> {
+    private Fragment fragment;
     private ArrayList<OwnedCompany> ownedCompanyArrayList;
     private TextView portfolioBalanceTextView;
     private TextView portfolioEquityTextView;
     private double totalCurrentValue;
     private boolean buttonClicked;
+    double priceChangeDouble;
 
-    public PortfolioRecyclerViewAdapter(ArrayList<OwnedCompany> dataListedCompany, TextView portfolioBalanceTextView, TextView portfolioEquityTextView) {
+    public PortfolioRecyclerViewAdapter(Fragment fragment, ArrayList<OwnedCompany> dataListedCompany, TextView portfolioBalanceTextView, TextView portfolioEquityTextView) {
+        this.fragment = fragment;
         ownedCompanyArrayList = dataListedCompany;
         this.portfolioBalanceTextView = portfolioBalanceTextView;
         this.portfolioEquityTextView = portfolioEquityTextView;
@@ -67,17 +72,19 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
             holder.portfolioRowSellButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
             holder.portfolioRowSellButton.setBackgroundColor(Color.parseColor("#808080"));
             holder.portfolioRowSellButton.setEnabled(false);
-            holder.portfolioRowLotsTextInputLayout.setEnabled(false);
 
             DecimalFormat df = new DecimalFormat("#.##");
 
             stocks.getCurrentPrice(mQueue, ownedCompanyArrayList.get(position).getCompanySymbol(), new VolleyCallback(){
                 @Override
                 public void onSuccess(String result){
+                    holder.portfolioRowSellButton.getBackground().setColorFilter(null);
+                    holder.portfolioRowSellButton.setBackgroundColor(Color.parseColor("#980000"));
+                    holder.portfolioRowSellButton.setEnabled(true);
                     try {
                         double priceOld = ownedCompanyArrayList.get(position).getAverageBoughtPrice();
                         double priceClose = Double.parseDouble(result);
-                        double priceChangeDouble = (priceClose - priceOld) / priceOld * 100;
+                        priceChangeDouble = (priceClose - priceOld) / priceOld * 100;
                         String priceChangeString = df.format(priceChangeDouble) + "%";
                         if (priceChangeDouble > 0) {
                             priceChangeString = "+" + priceChangeString;
@@ -95,42 +102,9 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
                             String temp = "$" + df.format(totalCurrentValue + UserArray.currentUser.getBalance());
                             portfolioEquityTextView.setText(temp);
                         }
-
-                        holder.portfolioRowLotsTextInputLayout.setEnabled(true);
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println(e.getMessage());
                     }
-                }
-            });
-
-            holder.portfolioRowLotsTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString().isEmpty()) {
-                        holder.portfolioRowSellButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-                        holder.portfolioRowSellButton.setBackgroundColor(Color.parseColor("#808080"));
-                        holder.portfolioRowSellButton.setEnabled(false);
-                    } else {
-                        if (Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString()) <= ownedCompanyArrayList.get(position).getLots() && Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString()) > 0) {
-                            holder.portfolioRowSellButton.getBackground().setColorFilter(null);
-                            holder.portfolioRowSellButton.setBackgroundColor(Color.parseColor("#980000"));
-                            holder.portfolioRowSellButton.setEnabled(true);
-                        } else {
-                            holder.portfolioRowSellButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-                            holder.portfolioRowSellButton.setBackgroundColor(Color.parseColor("#808080"));
-                            holder.portfolioRowSellButton.setEnabled(false);
-                        }
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
                 }
             });
 
@@ -138,8 +112,18 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
                 @Override
                 public void onClick(View v) {
                     buttonClicked = true;
-                    UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() + (Double.parseDouble(holder.portfolioRowCurrentPriceTextView.getText().toString()) * Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString())));
-                    sellPortfolioDB(holder, position, holder.portfolioRowAveragePriceTextView.getContext());
+
+                    Intent intent = new Intent(holder.portfolioRowAveragePriceTextView.getContext(), SellActivity.class);
+                    intent.putExtra("symbol", ownedCompanyArrayList.get(position).getCompanySymbol());
+                    intent.putExtra("lots", ownedCompanyArrayList.get(position).getLots());
+                    intent.putExtra("currentPrice", Double.parseDouble(holder.portfolioRowCurrentPriceTextView.getText().toString()));
+                    intent.putExtra("averagePrice", Double.parseDouble(holder.portfolioRowAveragePriceTextView.getText().toString()));
+                    String temp = holder.portfolioRowPercentageChange.getText().toString();
+                    temp = temp.replace("%", "");
+                    temp = temp.replace("+", "");
+                    intent.putExtra("percentage", Double.parseDouble(temp));
+                    intent.putExtra("position", position);
+                    fragment.startActivityForResult(intent, 1);
                 }
             });
         }
@@ -157,7 +141,6 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
         TextView portfolioRowCurrentPriceTextView;
         TextView portfolioRowPercentageChange;
         Button portfolioRowSellButton;
-        TextInputLayout portfolioRowLotsTextInputLayout;
 
         public PortfolioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -167,55 +150,6 @@ public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<Portfolio
             portfolioRowCurrentPriceTextView = itemView.findViewById(R.id.portfolioRowCurrentPriceTextView);
             portfolioRowPercentageChange = itemView.findViewById(R.id.portfolioRowPercentageChange);
             portfolioRowSellButton = itemView.findViewById(R.id.portfolioRowSellButton);
-            portfolioRowLotsTextInputLayout = itemView.findViewById(R.id.portfolioRowLotsTextInputLayout);
         }
-    }
-
-    private void sellPortfolioDB(@NonNull PortfolioRecyclerViewAdapter.PortfolioViewHolder holder, int position, Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/sell_portfolio.php";
-
-        RequestQueue mQueue = Volley.newRequestQueue(context);
-
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(holder.portfolioRowAveragePriceTextView.getContext(), "Sold " + Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString()) + " lot of " + ownedCompanyArrayList.get(position).getCompanySymbol() + " for " + holder.portfolioRowCurrentPriceTextView.getText().toString(), Toast.LENGTH_SHORT).show();
-                ownedCompanyArrayList.get(position).setLots(ownedCompanyArrayList.get(position).getLots() - Integer.parseInt(holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString()));
-                holder.portfolioRowLotsTextInputLayout.getEditText().setText("");
-                DecimalFormat df = new DecimalFormat("#.##");
-                String temp = "$" + df.format(UserArray.currentUser.getBalance());
-                portfolioBalanceTextView.setText(temp);
-                if (ownedCompanyArrayList.get(position).getLots() == 0) {
-                    ownedCompanyArrayList.remove(position);
-                }
-                notifyDataSetChanged();
-                System.out.println(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }){
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("symbol", ownedCompanyArrayList.get(position).getCompanySymbol());
-                params.put("lots", holder.portfolioRowLotsTextInputLayout.getEditText().getText().toString());
-                params.put("price", holder.portfolioRowCurrentPriceTextView.getText().toString());
-                params.put("user_id", String.valueOf(UserArray.currentUser.getId()));
-                params.put("balance", String.valueOf(UserArray.currentUser.getBalance()));
-
-                return params;
-            }
-        };
-
-        mQueue.add(request);
     }
 }
