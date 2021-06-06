@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void dataDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/read_user_by_id.php";
+        String url = "http://192.168.100.18/vesting_webservice/read_user_by_id.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
@@ -118,7 +118,9 @@ public class ProfileFragment extends Fragment {
 
                     profileNamaTextView.setText(objUser.getString("name"));
                     profileEmailTextView.setText(objUser.getString("email"));
-                    profileBalanceTextView.setText(objUser.getString("balance"));
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    String temp = "$" + df.format(objUser.getDouble("balance"));
+                    profileBalanceTextView.setText(temp);
                     profilePhoneNumberTextView.setText(objUser.getString("phone_number"));
                     profileAddressTextView.setText(objUser.getString("address"));
                 } catch (JSONException err) {
