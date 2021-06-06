@@ -141,24 +141,14 @@ public class HomeFragment extends Fragment {
                         formatDate = publishedAt;
                         formatDate1 = time;
                     }
-                    News model = new News(
-                            ""+name,
-                            ""+author,
-                            ""+title,
-                            ""+description,
-                            ""+url,
-                            ""+urlToImage,
-                            ""+formatDate,
-                            ""+formatDate1
-                    );
 
                     newsExampleSource.setText(name);
                     newsExampleTitle.setText(title);
                     newsExampleAuthor.setText(author);
                     newsExampleDescription.setText(description);
                     newsExampleUrl.setText(url);
-                    newsExamplePublishedAt.setText(publishedAt);
-                    newsExampleTime.setText(time);
+                    newsExamplePublishedAt.setText(formatDate);
+                    newsExampleTime.setText(formatDate1);
                     Picasso.get().load(urlToImage).into(newsExampleUrlToImage);
 
                 } catch (JSONException err) {
