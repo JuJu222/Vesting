@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="2dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="@color/cardview_dark_background"
         app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,48 +26,39 @@
 
             <ImageView
                 android:id="@+id/newsRowImage"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
+                android:layout_width="460dp"
+                android:layout_height="300dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/newsRowAuthor"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="212dp"
-                android:text="Author"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/newsRowTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="24dp"
                 android:hint="Title"
+                android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsRowImage" />
 
             <TextView
                 android:id="@+id/newsRowDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
                 android:hint="Description"
+                android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="18sp"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsRowTitle" />
 
@@ -77,11 +69,78 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:hint="Source"
+                android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/newsRowDescription"
                 app:layout_constraintTop_toBottomOf="@+id/newsRowDescription" />
+
+            <TextView
+                android:id="@+id/newsRowTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="time"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/newsRowSource"
+                app:layout_constraintTop_toTopOf="@+id/newsRowSource" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="38dp"
+                android:background="@drawable/shape"
+                app:layout_constraintBottom_toBottomOf="@+id/newsRowImage"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="4dp"
+                    app:srcCompat="@drawable/ic_date" />
+
+                <TextView
+                    android:id="@+id/newsRowPublishedAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:text="1 January 1990"
+                    android:textColor="@color/black" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/framelayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="38dp"
+                android:background="@drawable/shape"
+                app:layout_constraintBottom_toBottomOf="@+id/newsRowImage"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="4dp"
+                    app:srcCompat="@drawable/ic_author" />
+
+                <TextView
+                    android:id="@+id/newsRowAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Author"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

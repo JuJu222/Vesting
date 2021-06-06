@@ -3,16 +3,43 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class News implements Parcelable {
+public class News {
 
-    private String author, title, desc, source, image_path;
+    private String name, author, title, description, url, urlToImage, publishedAt, time;
 
-    public News(String author, String title, String desc, String source, String image_path) {
+    public News(String name, String author, String title, String description, String url, String urlToImage, String publishedAt, String time) {
+        this.name = name;
         this.author = author;
         this.title = title;
-        this.desc = desc;
-        this.source = source;
-        this.image_path = image_path;
+        this.description = description;
+        this.url = url;
+        this.urlToImage = urlToImage;
+        this.publishedAt = publishedAt;
+    }
+
+    public News(String name, String author, String title, String description, String url, String publishedAt) {
+        this.name = name;
+        this.author = author;
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.publishedAt = publishedAt;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAuthor() {
@@ -31,57 +58,36 @@ public class News implements Parcelable {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getSource() {
-        return source;
+    public String getUrl() {
+        return url;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getImage_path() {
-        return image_path;
+    public String getUrlToImage() {
+        return urlToImage;
     }
 
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
     }
 
-    protected News(Parcel in) {
-        author = in.readString();
-        title = in.readString();
-        desc = in.readString();
-        source = in.readString();
-        image_path = in.readString();
+    public String getPublishedAt() {
+        return publishedAt;
     }
 
-    public static final Creator<News> CREATOR = new Creator<News>() {
-        @Override
-        public News createFromParcel(Parcel in) {
-            return new News(in);
-        }
-
-        @Override
-        public News[] newArray(int size) {
-            return new News[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
     }
 }
+
