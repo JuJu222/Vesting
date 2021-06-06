@@ -76,14 +76,21 @@ public class NewsFragment extends Fragment {
                         String publishedAt = jsonObject1.getString("publishedAt");
                         String url = jsonObject1.getString("url");
                         String urlToImage = jsonObject1.getString("urlToImage");
+                        String time = jsonObject1.getString("publishedAt");
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd MMMM yyyy");
+                        SimpleDateFormat dateFormat3 = new SimpleDateFormat("HH:mm");
                         String formatDate = "";
-                        try {
-                            Date date = dateFormat.parse(publishedAt);
-                            formatDate = dateFormat.format(date);
-                        }catch (Exception e){
+                        String formatDate1 = "";
+                        try{
+                            Date date = dateFormat1.parse(publishedAt);
+                            formatDate = dateFormat2.format(date);
+                            Date date1 = dateFormat1.parse(time);
+                            formatDate1 = dateFormat3.format(date1);
+                        }catch(Exception e){
                             formatDate = publishedAt;
+                            formatDate1 = time;
                         }
 
                         News model = new News(
@@ -93,7 +100,8 @@ public class NewsFragment extends Fragment {
                                 ""+description,
                                 ""+url,
                                 ""+urlToImage,
-                                ""+formatDate
+                                ""+formatDate,
+                                ""+formatDate1
                         );
                         newsSource.add(model);
                         System.out.println(newsSource.get(0).getAuthor());

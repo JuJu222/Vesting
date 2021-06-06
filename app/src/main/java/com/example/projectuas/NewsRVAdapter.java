@@ -47,12 +47,14 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
         String url = news.getUrl();
         String urlToImage = news.getUrlToImage();
         String publishedAt = news.getPublishedAt();
+        String time = news.getTime();
 
         holder.newsRowSource.setText(name);
         holder.newsRowTitle.setText(title);
         holder.newsRowAuthor.setText(author);
         holder.newsRowDescription.setText(description);
         holder.newsRowPublishedAt.setText(publishedAt);
+        holder.newsRowTime.setText(time);
         Picasso.get().load(urlToImage).into(holder.newsRowImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +72,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
 
     public static class HolderSourceList extends RecyclerView.ViewHolder{
 
-        TextView newsRowAuthor, newsRowTitle, newsRowDescription, newsRowSource, newsRowPublishedAt;
+        TextView newsRowAuthor, newsRowTitle, newsRowDescription, newsRowSource, newsRowPublishedAt, newsRowTime;
         ImageView newsRowImage;
 
         public HolderSourceList(@NonNull View itemView) {
@@ -82,6 +84,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
             newsRowSource = itemView.findViewById(R.id.newsRowSource);
             newsRowPublishedAt = itemView.findViewById(R.id.newsRowPublishedAt);
             newsRowImage = itemView.findViewById(R.id.newsRowImage);
+            newsRowTime = itemView.findViewById(R.id.newsRowTime);
         }
     }
 }
