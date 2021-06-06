@@ -2,6 +2,7 @@ package com.example.projectuas;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,13 +57,12 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
         holder.newsRowDescription.setText(description);
         holder.newsRowPublishedAt.setText(publishedAt);
         holder.newsRowTime.setText(time);
-        holder.newsRowUrl.setText(url);
         Picasso.get().load(urlToImage).into(holder.newsRowImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                holder.newsRowSource.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         });
     }
@@ -74,7 +74,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
 
     public static class HolderSourceList extends RecyclerView.ViewHolder{
 
-        TextView newsRowAuthor, newsRowTitle, newsRowDescription, newsRowSource, newsRowPublishedAt, newsRowTime, newsRowUrl;
+        TextView newsRowAuthor, newsRowTitle, newsRowDescription, newsRowSource, newsRowPublishedAt, newsRowTime;
         ImageView newsRowImage;
 
         public HolderSourceList(@NonNull View itemView) {
@@ -87,7 +87,6 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
             newsRowPublishedAt = itemView.findViewById(R.id.newsRowPublishedAt);
             newsRowImage = itemView.findViewById(R.id.newsRowImage);
             newsRowTime = itemView.findViewById(R.id.newsRowTime);
-            newsRowUrl = itemView.findViewById(R.id.newsRowUrl);
         }
     }
 }

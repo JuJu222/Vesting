@@ -44,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/search_bar"
                 android:paddingLeft="16dp"
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Discover"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Explore all news"
+                android:text="Top Headline"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,6 +129,7 @@
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="248dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,12 +138,12 @@
             </com.github.mikephil.charting.charts.CandleStickChart>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/homeCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/cardview_dark_background"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="#151515"
                 app:cardCornerRadius="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +167,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
                         android:text="title"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -179,26 +181,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="24dp"
+                        android:layout_marginEnd="16dp"
                         android:text="Description"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/newsExampleTitle"
                         app:layout_constraintTop_toBottomOf="@+id/newsExampleTitle" />
-
-                    <TextView
-                        android:id="@+id/newsExampleUrl"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="24dp"
-                        android:autoLink="web"
-                        android:linksClickable="true"
-                        android:text="Url"
-                        android:textColor="@android:color/holo_blue_bright"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/newsExampleDescription"
-                        app:layout_constraintTop_toBottomOf="@+id/newsExampleDescription" />
 
                     <TextView
                         android:id="@+id/newsExampleSource"
@@ -209,8 +197,8 @@
                         android:text="Source"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/newsExampleUrl"
-                        app:layout_constraintTop_toBottomOf="@+id/newsExampleUrl" />
+                        app:layout_constraintStart_toStartOf="@+id/newsExampleDescription"
+                        app:layout_constraintTop_toBottomOf="@+id/newsExampleDescription" />
 
                     <TextView
                         android:id="@+id/newsExampleTime"

@@ -3,6 +3,7 @@ package com.example.projectuas.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -56,8 +58,9 @@ import model.UserArray;
 public class HomeFragment extends Fragment {
     RequestQueue mQueue;
 
-    private TextView newsExampleTitle, newsExampleAuthor, newsExampleDescription, newsExampleUrl, newsExampleSource, newsExamplePublishedAt, newsExampleTime;
+    private TextView newsExampleTitle, newsExampleAuthor, newsExampleDescription, newsExampleSource, newsExamplePublishedAt, newsExampleTime;
     private ImageView newsExampleUrlToImage;
+    private CardView homeCardView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,11 +73,12 @@ public class HomeFragment extends Fragment {
         newsExampleTitle = root.findViewById(R.id.newsExampleTitle);
         newsExampleAuthor = root.findViewById(R.id.newsExampleAuthor);
         newsExampleDescription = root.findViewById(R.id.newsExampleDescription);
-        newsExampleUrl = root.findViewById(R.id.newsExampleUrl);
         newsExampleUrlToImage = root.findViewById(R.id.newsExampleUrlToImage);
         newsExampleSource = root.findViewById(R.id.newsExampleSource);
         newsExamplePublishedAt = root.findViewById(R.id.newsExamplePublishedAt);
         newsExampleTime = root.findViewById(R.id.newsExampleTime);
+        homeCardView = root.findViewById(R.id.homeCardView);
+
 
         dataNews(getContext());
 
@@ -156,10 +160,16 @@ public class HomeFragment extends Fragment {
                     newsExampleTitle.setText(title);
                     newsExampleAuthor.setText(author);
                     newsExampleDescription.setText(description);
-                    newsExampleUrl.setText(url);
                     newsExamplePublishedAt.setText(publishedAt);
                     newsExampleTime.setText(time);
                     Picasso.get().load(urlToImage).into(newsExampleUrlToImage);
+
+                    homeCardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        }
+                    });
 
                 } catch (JSONException err) {
                     err.printStackTrace();
