@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:hint="Description"
                 android:textColor="@color/white"
@@ -74,7 +74,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/newsRowDescription"
-                app:layout_constraintTop_toBottomOf="@+id/newsRowDescription" />
+                app:layout_constraintTop_toBottomOf="@id/newsRowUrl" />
 
             <TextView
                 android:id="@+id/newsRowTime"
@@ -85,6 +85,21 @@
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/newsRowSource"
                 app:layout_constraintTop_toTopOf="@+id/newsRowSource" />
+
+            <TextView
+                android:id="@+id/newsRowUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:autoLink="web"
+                android:linksClickable="true"
+                android:text="Read More..."
+                android:textColor="@android:color/holo_blue_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsRowDescription" />
 
             <FrameLayout
                 android:id="@+id/frameLayout"

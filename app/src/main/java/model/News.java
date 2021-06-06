@@ -15,6 +15,7 @@ public class News {
         this.url = url;
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
+        this.time = time;
     }
 
     public News(String name, String author, String title, String description, String url, String publishedAt) {
