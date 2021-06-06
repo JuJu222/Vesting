@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment {
     private TextView newsExampleTitle, newsExampleAuthor, newsExampleDescription, newsExampleSource, newsExamplePublishedAt, newsExampleTime;
     private ImageView newsExampleUrlToImage;
     private CardView homeCardView;
+    private FrameLayout frameLayout3;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class HomeFragment extends Fragment {
         newsExamplePublishedAt = root.findViewById(R.id.newsExamplePublishedAt);
         newsExampleTime = root.findViewById(R.id.newsExampleTime);
         homeCardView = root.findViewById(R.id.homeCardView);
+        frameLayout3 = root.findViewById(R.id.frameLayout3);
 
 
         dataNews(getContext());
@@ -158,7 +161,11 @@ public class HomeFragment extends Fragment {
 
                     newsExampleSource.setText(name);
                     newsExampleTitle.setText(title);
-                    newsExampleAuthor.setText(author);
+                    if (author.equals("null")) {
+                        frameLayout3.setVisibility(View.INVISIBLE);
+                    } else {
+                        newsExampleAuthor.setText(author);
+                    }
                     newsExampleDescription.setText(description);
                     newsExamplePublishedAt.setText(publishedAt);
                     newsExampleTime.setText(time);

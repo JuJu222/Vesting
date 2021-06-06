@@ -7,6 +7,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,7 +54,11 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
 
         holder.newsRowSource.setText(name);
         holder.newsRowTitle.setText(title);
-        holder.newsRowAuthor.setText(author);
+        if (author.equals("null")) {
+            holder.framelayout1.setVisibility(View.INVISIBLE);
+        } else {
+            holder.newsRowAuthor.setText(author);
+        }
         holder.newsRowDescription.setText(description);
         holder.newsRowPublishedAt.setText(publishedAt);
         holder.newsRowTime.setText(time);
@@ -76,6 +81,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
 
         TextView newsRowAuthor, newsRowTitle, newsRowDescription, newsRowSource, newsRowPublishedAt, newsRowTime;
         ImageView newsRowImage;
+        FrameLayout framelayout1;
 
         public HolderSourceList(@NonNull View itemView) {
             super(itemView);
@@ -87,6 +93,7 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
             newsRowPublishedAt = itemView.findViewById(R.id.newsRowPublishedAt);
             newsRowImage = itemView.findViewById(R.id.newsRowImage);
             newsRowTime = itemView.findViewById(R.id.newsRowTime);
+            framelayout1 = itemView.findViewById(R.id.framelayout1);
         }
     }
 }
