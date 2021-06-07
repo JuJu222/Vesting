@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardBackgroundColor="#151515"
         app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,9 @@
 
             <ImageView
                 android:id="@+id/newsRowImage"
-                android:layout_width="460dp"
-                android:layout_height="300dp"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:hint="Title"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -53,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="16dp"
                 android:hint="Description"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -74,7 +76,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/newsRowDescription"
-                app:layout_constraintTop_toBottomOf="@id/newsRowUrl" />
+                app:layout_constraintTop_toBottomOf="@+id/newsRowDescription" />
 
             <TextView
                 android:id="@+id/newsRowTime"
@@ -86,27 +88,12 @@
                 app:layout_constraintStart_toEndOf="@+id/newsRowSource"
                 app:layout_constraintTop_toTopOf="@+id/newsRowSource" />
 
-            <TextView
-                android:id="@+id/newsRowUrl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="24dp"
-                android:autoLink="web"
-                android:linksClickable="true"
-                android:text="Read More..."
-                android:textColor="@android:color/holo_blue_bright"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newsRowDescription" />
-
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="38dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/shape"
                 app:layout_constraintBottom_toBottomOf="@+id/newsRowImage"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -133,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="38dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/shape"
                 app:layout_constraintBottom_toBottomOf="@+id/newsRowImage"
                 app:layout_constraintStart_toStartOf="parent">

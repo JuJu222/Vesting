@@ -3,11 +3,13 @@ package com.example.projectuas.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -56,8 +59,10 @@ import model.UserArray;
 public class HomeFragment extends Fragment {
     RequestQueue mQueue;
 
-    private TextView newsExampleTitle, newsExampleAuthor, newsExampleDescription, newsExampleUrl, newsExampleSource, newsExamplePublishedAt, newsExampleTime;
+    private TextView newsExampleTitle, newsExampleAuthor, newsExampleDescription, newsExampleSource, newsExamplePublishedAt, newsExampleTime;
     private ImageView newsExampleUrlToImage;
+    private CardView homeCardView;
+    private FrameLayout frameLayout3;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,11 +75,13 @@ public class HomeFragment extends Fragment {
         newsExampleTitle = root.findViewById(R.id.newsExampleTitle);
         newsExampleAuthor = root.findViewById(R.id.newsExampleAuthor);
         newsExampleDescription = root.findViewById(R.id.newsExampleDescription);
-        newsExampleUrl = root.findViewById(R.id.newsExampleUrl);
         newsExampleUrlToImage = root.findViewById(R.id.newsExampleUrlToImage);
         newsExampleSource = root.findViewById(R.id.newsExampleSource);
         newsExamplePublishedAt = root.findViewById(R.id.newsExamplePublishedAt);
         newsExampleTime = root.findViewById(R.id.newsExampleTime);
+        homeCardView = root.findViewById(R.id.homeCardView);
+        frameLayout3 = root.findViewById(R.id.frameLayout3);
+
 
         dataNews(getContext());
 
@@ -104,7 +111,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void dataNews(Context context) {
-        String url = "https://newsapi.org/v2/everything?q=stocks&pageSize=20&apiKey=" + NewsAPI.API_KEY;
+        String url = "https://newsapi.org/v2/top-headlines?category=business&country=us&pageSize=20&apiKey=" + NewsAPI.API_KEY;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -144,12 +151,23 @@ public class HomeFragment extends Fragment {
 
                     newsExampleSource.setText(name);
                     newsExampleTitle.setText(title);
-                    newsExampleAuthor.setText(author);
+                    if (author.equals("null")) {
+                        frameLayout3.setVisibility(View.INVISIBLE);
+                    } else {
+                        newsExampleAuthor.setText(author);
+                    }
                     newsExampleDescription.setText(description);
-                    newsExampleUrl.setText(url);
                     newsExamplePublishedAt.setText(formatDate);
                     newsExampleTime.setText(formatDate1);
+
                     Picasso.get().load(urlToImage).into(newsExampleUrlToImage);
+
+                    homeCardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        }
+                    });
 
                 } catch (JSONException err) {
                     err.printStackTrace();

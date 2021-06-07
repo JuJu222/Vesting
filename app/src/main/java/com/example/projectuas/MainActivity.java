@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         intent = getIntent();
 
         User user = intent.getParcelableExtra("IDuser");
-        
+
+        Companies.getListedCompanies().clear();
         Companies.getListedCompanies().add(new ListedCompany("MMM"));
         Companies.getListedCompanies().add(new ListedCompany("ABT"));
         Companies.getListedCompanies().add(new ListedCompany("ABBV"));
