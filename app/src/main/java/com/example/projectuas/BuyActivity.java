@@ -130,7 +130,7 @@ public class BuyActivity extends AppCompatActivity {
     }
 
     private void buyPortfolioDB(Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/buy_portfolio.php";
+        String url = "http://192.168.0.146/vesting_webservice/buy_portfolio.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

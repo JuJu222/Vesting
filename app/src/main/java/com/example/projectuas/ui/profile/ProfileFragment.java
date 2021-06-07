@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import com.example.projectuas.Login;
 import com.example.projectuas.MainActivity;
 import com.example.projectuas.PortfolioRecyclerViewAdapter;
 import com.example.projectuas.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,7 +108,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void dataDB(Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/read_user_by_id.php";
+        String url = "http://192.168.0.146/vesting_webservice/read_user_by_id.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

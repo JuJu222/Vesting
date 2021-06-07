@@ -140,7 +140,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginDB(Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/read_user.php";
+        String url = "http://192.168.0.146/vesting_webservice/read_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
