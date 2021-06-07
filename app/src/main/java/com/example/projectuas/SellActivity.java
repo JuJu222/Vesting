@@ -105,7 +105,7 @@ public class SellActivity extends AppCompatActivity {
 
                     if (isAbove0 && !isExceedLots) {
                         sellButton.getBackground().setColorFilter(null);
-                        sellButton.setBackgroundColor(Color.parseColor("#41A03A"));
+                        sellButton.setBackgroundColor(Color.parseColor("#980000"));
                         sellButton.setEnabled(true);
 
                         String plAmountString  = "$" + df.format(plAmount);
