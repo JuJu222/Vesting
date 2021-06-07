@@ -98,7 +98,9 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            dataDB(getContext());
+            if  (resultCode == 1) {
+                dataDB(getContext());
+            }
         }
     }
 
