@@ -54,7 +54,7 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
-                if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty() && phone.isEmpty() && address.isEmpty()){
+                if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty() && !phone.isEmpty() && !address.isEmpty()){
                     Intent intent = new Intent(Register.this, MainActivity.class);
                     User user = new User(email, nama, password, phone, address, new ArrayList<>());
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
@@ -175,10 +175,10 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
 
                 if(phone.isEmpty()){
-                    signup_textInput_pass.setError("please fill the password column");
+                    signup_textInput_phone.setError("please fill the phone column");
                 }else{
                     if(phone.length()<7 || phone.length() >15){
-                        signup_textInput_pass.setError("Phone number must be 7 to 15 digits");
+                        signup_textInput_phone.setError("Phone number must be 7 to 15 digits");
                     }else{
                         signup_textInput_phone.setError("");
                     }
@@ -202,9 +202,9 @@ public class Register extends AppCompatActivity {
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
                 if(address.isEmpty()){
-                    signup_textInput_pass.setError("please fill the password column");
+                    signup_textInput_address.setError("please fill the Address column");
                 }else{
-                    signup_textInput_pass.setError("");
+                    signup_textInput_address.setError("");
                 }
             }
 
@@ -216,7 +216,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void addDataDB(Context context) {
-        String url = "http://192.168.100.18/vesting_webservice/create_user.php";
+        String url = "http://192.168.0.146/vesting_webservice/create_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
@@ -249,6 +249,8 @@ public class Register extends AppCompatActivity {
                 params.put("name", signup_textInput_name.getEditText().getText().toString().trim());
                 params.put("email", signup_textInput_email.getEditText().getText().toString().trim());
                 params.put("password", signup_textInput_pass.getEditText().getText().toString().trim());
+                params.put("phone_number", signup_textInput_phone.getEditText().getText().toString().trim());
+                params.put("address", signup_textInput_address.getEditText().getText().toString().trim());
 
                 return params;
             }

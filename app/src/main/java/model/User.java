@@ -15,12 +15,16 @@ public class User implements Parcelable{
         this.email = "";
         this.nama = "";
         this.password = "";
+        this.phoneNumber = "";
+        this.address = "";
     }
 
-    public User(String email, String nama, String password) {
+    public User(String email, String nama, String password, String phoneNumber, String address) {
         this.email = email;
         this.nama = nama;
         this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public User(String email, String nama, String password, String phoneNumber, String address, ArrayList<OwnedCompany> ownedCompanies) {
@@ -37,6 +41,8 @@ public class User implements Parcelable{
         nama = in.readString();
         email = in.readString();
         password = in.readString();
+        phoneNumber = in.readString();
+        address = in.readString();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
