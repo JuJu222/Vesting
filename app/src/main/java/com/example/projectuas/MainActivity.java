@@ -569,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dataDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/read_user_by_id.php";
+        String url = "http://192.168.100.18/vesting_webservice/read_user_by_id.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

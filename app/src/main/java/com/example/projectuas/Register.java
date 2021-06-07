@@ -216,7 +216,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void addDataDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/create_user.php";
+        String url = "http://192.168.100.18/vesting_webservice/create_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

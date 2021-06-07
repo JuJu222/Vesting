@@ -88,7 +88,7 @@ public class PortfolioFragment extends Fragment {
     }
 
     private void loadDataDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/read_all_portfolio.php";
+        String url = "http://192.168.100.18/vesting_webservice/read_all_portfolio.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
