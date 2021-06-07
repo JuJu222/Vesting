@@ -30,7 +30,7 @@ public class EditProfileActivity extends AppCompatActivity {
     TextInputLayout editProfilePhoneNumberTextInputLayout;
     TextInputLayout editProfileAddressTextInputLayout;
     Button editProfileSubmitButton;
-
+    Boolean validateBalance, validatePhone, validateAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +40,21 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfilePhoneNumberTextInputLayout = findViewById(R.id.editProfilePhoneNumberTextInputLayout);
         editProfileAddressTextInputLayout = findViewById(R.id.editProfileAddressTextInputLayout);
         editProfileSubmitButton = findViewById(R.id.editProfileSubmitButton);
+        validateBalance = false;
+        validatePhone = false;
+        validateAddress = false;
 
         editProfileSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUserDB(getApplicationContext());
+                if(validateBalance && validatePhone && validateAddress){
+                    updateUserDB(getApplicationContext());
+                }else{
+                    editProfileBalanceTextInputLayout.setError("Please correct the Balance column");
+                    editProfilePhoneNumberTextInputLayout.setError("Please correct the Phone Number column");
+                    editProfileAddressTextInputLayout.setError("Please correct the Address column");
+                }
 
-                Intent intent = new Intent();
-                setResult(1, intent);
-                finish();
             }
         });
         editProfileBalanceTextInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
@@ -63,11 +69,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if(balance.isEmpty()){
                     editProfileBalanceTextInputLayout.setError("please fill the balance column");
+                    validateBalance = false;
                 }else{
                     if(balance.length()<1 || balance.length()>15){
                         editProfileBalanceTextInputLayout.setError("Balance number must be 1 to 15 digits");
+                        validateBalance = false;
                     }else{
                         editProfileBalanceTextInputLayout.setError("");
+                        validateBalance = true;
                     }
                 }
             }
@@ -90,11 +99,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if(phone.isEmpty()){
                     editProfilePhoneNumberTextInputLayout.setError("please fill the phone column");
+                    validatePhone = false;
                 }else{
                     if(phone.length()<7 || phone.length() >15){
                         editProfilePhoneNumberTextInputLayout.setError("Phone number must be 7 to 15 digits");
+                        validatePhone = false;
                     }else{
                         editProfilePhoneNumberTextInputLayout.setError("");
+                        validatePhone = true;
                     }
                 }
             }
@@ -117,8 +129,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if(address.isEmpty()){
                     editProfileAddressTextInputLayout.setError("please fill the Address column");
+                    validateAddress = false;
                 }else{
                     editProfileAddressTextInputLayout.setError("");
+                    validateAddress = true;
                 }
             }
 
@@ -138,6 +152,10 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
+
+                Intent intent = new Intent();
+                setResult(1, intent);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override
