@@ -105,8 +105,6 @@ public class NewsFragment extends Fragment {
                                 ""+formatDate1
                         );
                         newsSource.add(model);
-                        System.out.println(newsSource.get(0).getAuthor());
-                        System.out.println(newsSource.size());
                     }
                     newsRVAdapter.notifyDataSetChanged();
                 }
