@@ -366,7 +366,6 @@ public class MainActivity extends AppCompatActivity {
         Companies.getListedCompanies().add(new ListedCompany("MDT"));
         Companies.getListedCompanies().add(new ListedCompany("MRK"));
         Companies.getListedCompanies().add(new ListedCompany("MET"));
-        Companies.getListedCompanies().add(new ListedCompany("MET"));
         Companies.getListedCompanies().add(new ListedCompany("MTD"));
         Companies.getListedCompanies().add(new ListedCompany("MGM"));
         Companies.getListedCompanies().add(new ListedCompany("MCHP"));
