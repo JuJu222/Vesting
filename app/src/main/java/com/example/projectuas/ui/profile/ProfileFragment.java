@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import com.example.projectuas.Login;
 import com.example.projectuas.MainActivity;
 import com.example.projectuas.PortfolioRecyclerViewAdapter;
 import com.example.projectuas.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,7 +101,9 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            dataDB(getContext());
+            if  (resultCode == 1) {
+                dataDB(getContext());
+            }
         }
     }
 
