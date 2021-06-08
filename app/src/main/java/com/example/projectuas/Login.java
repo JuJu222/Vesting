@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity {
                     validateEmail = false;
                 }else{
                     if(!EMAIL_ADDRESS_PATTERN.matcher(email).matches()){
-                        login_textInput_email.setError("Wrong format email");
+                        login_textInput_email.setError("Wrong email format");
                         validateEmail = false;
                     }else{
                         login_textInput_email.setError("");
@@ -140,7 +140,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/read_user.php";
+        String url = "http://192.168.100.18/vesting_webservice/read_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

@@ -105,7 +105,7 @@ public class SellActivity extends AppCompatActivity {
 
                     if (isAbove0 && !isExceedLots) {
                         sellButton.getBackground().setColorFilter(null);
-                        sellButton.setBackgroundColor(Color.parseColor("#41A03A"));
+                        sellButton.setBackgroundColor(Color.parseColor("#980000"));
                         sellButton.setEnabled(true);
 
                         String plAmountString  = "$" + df.format(plAmount);
@@ -169,7 +169,7 @@ public class SellActivity extends AppCompatActivity {
     }
 
     private void sellPortfolioDB(int position, Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/sell_portfolio.php";
+        String url = "http://192.168.100.18/vesting_webservice/sell_portfolio.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

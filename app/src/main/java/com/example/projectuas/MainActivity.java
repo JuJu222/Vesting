@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        User user = intent.getParcelableExtra("IDuser");
-
         Companies.getListedCompanies().clear();
         Companies.getListedCompanies().add(new ListedCompany("MMM"));
         Companies.getListedCompanies().add(new ListedCompany("ABT"));
@@ -366,7 +364,6 @@ public class MainActivity extends AppCompatActivity {
         Companies.getListedCompanies().add(new ListedCompany("MDT"));
         Companies.getListedCompanies().add(new ListedCompany("MRK"));
         Companies.getListedCompanies().add(new ListedCompany("MET"));
-        Companies.getListedCompanies().add(new ListedCompany("MET"));
         Companies.getListedCompanies().add(new ListedCompany("MTD"));
         Companies.getListedCompanies().add(new ListedCompany("MGM"));
         Companies.getListedCompanies().add(new ListedCompany("MCHP"));
@@ -569,7 +566,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dataDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/read_user_by_id.php";
+        String url = "http://192.168.100.18/vesting_webservice/read_user_by_id.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

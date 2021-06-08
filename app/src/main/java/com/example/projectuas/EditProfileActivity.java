@@ -68,7 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String balance = editProfileBalanceTextInputLayout.getEditText().getText().toString().trim();
 
                 if(balance.isEmpty()){
-                    editProfileBalanceTextInputLayout.setError("please fill the balance column");
+                    editProfileBalanceTextInputLayout.setError("Please fill the balance column");
                     validateBalance = false;
                 }else{
                     if(balance.length()<1 || balance.length()>15){
@@ -98,7 +98,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String phone = editProfilePhoneNumberTextInputLayout.getEditText().getText().toString().trim();
 
                 if(phone.isEmpty()){
-                    editProfilePhoneNumberTextInputLayout.setError("please fill the phone column");
+                    editProfilePhoneNumberTextInputLayout.setError("Please fill the phone column");
                     validatePhone = false;
                 }else{
                     if(phone.length()<7 || phone.length() >15){
@@ -128,7 +128,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String address = editProfileAddressTextInputLayout.getEditText().getText().toString().trim();
 
                 if(address.isEmpty()){
-                    editProfileAddressTextInputLayout.setError("please fill the Address column");
+                    editProfileAddressTextInputLayout.setError("Please fill the Address column");
                     validateAddress = false;
                 }else{
                     editProfileAddressTextInputLayout.setError("");
@@ -144,7 +144,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/update_user.php";
+        String url = "http://192.168.100.18/vesting_webservice/update_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 

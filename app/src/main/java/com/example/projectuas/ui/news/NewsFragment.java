@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,7 @@ public class NewsFragment extends Fragment {
     private RecyclerView newsRecyclerView;
     private ArrayList<News> newsSource;
     private NewsRVAdapter newsRVAdapter;
+    private TextView newsLoadingData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +48,11 @@ public class NewsFragment extends Fragment {
         newsSource = new ArrayList<>();
         loadsources();
 
+        newsLoadingData = root.findViewById(R.id.newsLoadingData);
         newsRecyclerView = root.findViewById(R.id.newsRecyclerView);
+
+        newsLoadingData.setVisibility(View.VISIBLE);
+
         newsRVAdapter = new NewsRVAdapter(getActivity(), newsSource);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         newsRecyclerView.setAdapter(newsRVAdapter);
@@ -105,9 +111,8 @@ public class NewsFragment extends Fragment {
                                 ""+formatDate1
                         );
                         newsSource.add(model);
-                        System.out.println(newsSource.get(0).getAuthor());
-                        System.out.println(newsSource.size());
                     }
+                    newsLoadingData.setVisibility(View.GONE);
                     newsRVAdapter.notifyDataSetChanged();
                 }
                 catch (Exception e){

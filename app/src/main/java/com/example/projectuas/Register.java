@@ -130,6 +130,7 @@ public class Register extends AppCompatActivity {
                 if(nama.isEmpty()){
                     signup_textInput_name.setError("please fill the name column");
                     validateName = false;
+
                 }else{
                     if(nama.length() < 4 || nama.length() > 20){
                         signup_textInput_name.setError("Username must be 4 to 20 characters");
@@ -225,6 +226,7 @@ public class Register extends AppCompatActivity {
                 if(address.isEmpty()){
                     signup_textInput_address.setError("please fill the Address column");
                     validateAddress = false;
+                    signup_textInput_address.setError("Please fill the Address column");
                 }else{
                     signup_textInput_address.setError("");
                     validateAddress = true;
@@ -239,7 +241,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void addDataDB(Context context) {
-        String url = "http://192.168.0.146/vesting_webservice/create_user.php";
+        String url = "http://192.168.100.18/vesting_webservice/create_user.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
