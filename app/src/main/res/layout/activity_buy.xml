@@ -146,6 +146,7 @@
             android:layout_height="wrap_content"
             android:hint="Lots"
             android:inputType="number"
+            android:maxLength="9"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>

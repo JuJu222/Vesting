@@ -50,9 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(validateBalance && validatePhone && validateAddress){
                     updateUserDB(getApplicationContext());
                 }else{
-                    editProfileBalanceTextInputLayout.setError("Please correct the Balance column");
-                    editProfilePhoneNumberTextInputLayout.setError("Please correct the Phone Number column");
-                    editProfileAddressTextInputLayout.setError("Please correct the Address column");
+                    Toast.makeText(EditProfileActivity.this, "Please correct/fill the field(s)", Toast.LENGTH_SHORT).show();
                 }
 
             }

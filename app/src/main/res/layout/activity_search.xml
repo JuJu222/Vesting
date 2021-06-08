@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Search"
+            android:inputType="text|textCapCharacters"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>

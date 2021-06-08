@@ -128,12 +128,12 @@ public class Register extends AppCompatActivity {
                 String nama = signup_textInput_name.getEditText().getText().toString().trim();
 
                 if(nama.isEmpty()){
-                    signup_textInput_name.setError("please fill the name column");
+                    signup_textInput_name.setError("Please fill the name column");
                     validateName = false;
 
                 }else{
                     if(nama.length() < 4 || nama.length() > 20){
-                        signup_textInput_name.setError("Username must be 4 to 20 characters");
+                        signup_textInput_name.setError("Name must be 4 to 20 characters");
                         validateName = false;
                     }else{
                         signup_textInput_name.setError("");
@@ -194,7 +194,7 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
 
                 if(phone.isEmpty()){
-                    signup_textInput_phone.setError("please fill the phone column");
+                    signup_textInput_phone.setError("Please fill the phone column");
                     validatePhone = false;
                 }else{
                     if(phone.length()<7 || phone.length() >15){
@@ -224,7 +224,7 @@ public class Register extends AppCompatActivity {
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
                 if(address.isEmpty()){
-                    signup_textInput_address.setError("please fill the Address column");
+                    signup_textInput_address.setError("Please fill the Address column");
                     validateAddress = false;
                     signup_textInput_address.setError("Please fill the Address column");
                 }else{
