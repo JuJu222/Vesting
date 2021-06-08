@@ -45,6 +45,11 @@ public class Register extends AppCompatActivity {
         signup_button_Signup = findViewById(R.id.signup_button_Signup);
         signup_textInput_phone = findViewById(R.id.signup_textInput_phone);
         signup_textInput_address = findViewById(R.id.signup_textInput_address);
+        validateEmail = false;
+        validateName = false;
+        validatePass = false;
+        validatePhone = false;
+        validateAddress = false;
 
         signup_button_Signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +60,7 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
-                if(!email.isEmpty() && !nama.isEmpty() && !password.isEmpty() && !phone.isEmpty() && !address.isEmpty()){
+                if(validateEmail && validateName && validatePass && validatePhone && validateAddress){
                     Intent intent = new Intent(Register.this, MainActivity.class);
                     User user = new User(email, nama, password, phone, address, new ArrayList<>());
                     for (int i = 0; i < UserArray.akunuser.size(); i++){
@@ -65,12 +70,8 @@ public class Register extends AppCompatActivity {
                         }
                     }
                     addDataDB(getApplicationContext());
-                }else{
-                    signup_textInput_email.setError("Please correct the Email column");
-                    signup_textInput_name.setError("Please correct the Name column");
-                    signup_textInput_pass.setError("Please correct the Password column");
-                    signup_textInput_phone.setError("Please correct the Phone Number column");
-                    signup_textInput_address.setError("Please correct the Address column");
+                }else {
+                    Toast.makeText(Register.this, "Please correct/fill the field(s)", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -98,11 +99,14 @@ public class Register extends AppCompatActivity {
 
                 if(email.isEmpty()){
                     signup_textInput_email.setError("Please fill the email column");
+                    validateEmail = false;
                 }else{
                     if(!EMAIL_ADDRESS_PATTERN.matcher(email).matches()){
-                        signup_textInput_email.setError("Wrong email format");
+                        signup_textInput_email.setError("Wrong format email");
+                        validateEmail = false;
                     }else{
                         signup_textInput_email.setError("");
+                        validateEmail = true;
                     }
                 }
             }
@@ -124,12 +128,16 @@ public class Register extends AppCompatActivity {
                 String nama = signup_textInput_name.getEditText().getText().toString().trim();
 
                 if(nama.isEmpty()){
-                    signup_textInput_name.setError("Please fill the name column");
+                    signup_textInput_name.setError("please fill the name column");
+                    validateName = false;
+
                 }else{
                     if(nama.length() < 4 || nama.length() > 20){
                         signup_textInput_name.setError("Username must be 4 to 20 characters");
+                        validateName = false;
                     }else{
                         signup_textInput_name.setError("");
+                        validateName = true;
                     }
                 }
             }
@@ -154,13 +162,17 @@ public class Register extends AppCompatActivity {
 
                 if (password.isEmpty()){
                     signup_textInput_pass.setError("Please fill the password column");
+                    validatePass = false;
                 }else{
                     if (password.length() < 4 || password.length() > 20){
                         signup_textInput_pass.setError("Password must be 4 to 20 characters");
+                        validatePass = false;
                     }else if (!PASSWORD_PATTERN.matcher(password).matches()){
                         signup_textInput_pass.setError("Must contain a - z, A - Z, !, @, #, $");
+                        validatePass = false;
                     }else{
                         signup_textInput_pass.setError("");
+                        validatePass = true;
                     }
                 }
             }
@@ -182,12 +194,15 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
 
                 if(phone.isEmpty()){
-                    signup_textInput_phone.setError("Please fill the phone column");
+                    signup_textInput_phone.setError("please fill the phone column");
+                    validatePhone = false;
                 }else{
                     if(phone.length()<7 || phone.length() >15){
                         signup_textInput_phone.setError("Phone number must be 7 to 15 digits");
+                        validatePhone = false;
                     }else{
                         signup_textInput_phone.setError("");
+                        validatePhone = true;
                     }
                 }
             }
@@ -209,9 +224,12 @@ public class Register extends AppCompatActivity {
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
                 if(address.isEmpty()){
+                    signup_textInput_address.setError("please fill the Address column");
+                    validateAddress = false;
                     signup_textInput_address.setError("Please fill the Address column");
                 }else{
                     signup_textInput_address.setError("");
+                    validateAddress = true;
                 }
             }
 
