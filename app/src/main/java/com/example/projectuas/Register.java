@@ -31,6 +31,7 @@ public class Register extends AppCompatActivity {
 
     private TextInputLayout signup_textInput_email, signup_textInput_name, signup_textInput_pass, signup_textInput_phone, signup_textInput_address;
     private Button signup_button_Signup, signup_button_Login;
+    private Boolean validateEmail, validateName, validatePass, validatePhone, validateAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,12 @@ public class Register extends AppCompatActivity {
                         }
                     }
                     addDataDB(getApplicationContext());
+                }else{
+                    signup_textInput_email.setError("Please correct the Email column");
+                    signup_textInput_name.setError("Please correct the Name column");
+                    signup_textInput_pass.setError("Please correct the Password column");
+                    signup_textInput_phone.setError("Please correct the Phone Number column");
+                    signup_textInput_address.setError("Please correct the Address column");
                 }
             }
         });
