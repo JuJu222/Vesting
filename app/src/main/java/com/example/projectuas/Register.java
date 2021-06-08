@@ -100,7 +100,7 @@ public class Register extends AppCompatActivity {
                     signup_textInput_email.setError("Please fill the email column");
                 }else{
                     if(!EMAIL_ADDRESS_PATTERN.matcher(email).matches()){
-                        signup_textInput_email.setError("Wrong format email");
+                        signup_textInput_email.setError("Wrong email format");
                     }else{
                         signup_textInput_email.setError("");
                     }
@@ -124,7 +124,7 @@ public class Register extends AppCompatActivity {
                 String nama = signup_textInput_name.getEditText().getText().toString().trim();
 
                 if(nama.isEmpty()){
-                    signup_textInput_name.setError("please fill the name column");
+                    signup_textInput_name.setError("Please fill the name column");
                 }else{
                     if(nama.length() < 4 || nama.length() > 20){
                         signup_textInput_name.setError("Username must be 4 to 20 characters");
@@ -182,7 +182,7 @@ public class Register extends AppCompatActivity {
                 String phone = signup_textInput_phone.getEditText().getText().toString().trim();
 
                 if(phone.isEmpty()){
-                    signup_textInput_phone.setError("please fill the phone column");
+                    signup_textInput_phone.setError("Please fill the phone column");
                 }else{
                     if(phone.length()<7 || phone.length() >15){
                         signup_textInput_phone.setError("Phone number must be 7 to 15 digits");
@@ -209,7 +209,7 @@ public class Register extends AppCompatActivity {
                 String address = signup_textInput_address.getEditText().getText().toString().trim();
 
                 if(address.isEmpty()){
-                    signup_textInput_address.setError("please fill the Address column");
+                    signup_textInput_address.setError("Please fill the Address column");
                 }else{
                     signup_textInput_address.setError("");
                 }
