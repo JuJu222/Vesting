@@ -6,9 +6,11 @@ if (!empty($_POST)) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
+    $phone_number = $_POST["phone_number"];
+    $address = $_POST["address"];
 
-    $query = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-    $query->bind_param("sss", $name, $email, $password);
+    $query = $conn->prepare("INSERT INTO users (name, email, password, phone_number, address) VALUES (?, ?, ?, ?, ?)");
+    $query->bind_param("sssss", $name, $email, $password, $phone_number, $address);
     $result = $query->execute();
 
     if ($result) {
