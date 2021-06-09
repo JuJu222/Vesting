@@ -62,7 +62,8 @@ public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSour
         holder.newsRowDescription.setText(description);
         holder.newsRowPublishedAt.setText(publishedAt);
         holder.newsRowTime.setText(time);
-        Picasso.get().load(urlToImage).into(holder.newsRowImage);
+
+        Picasso.get().load(urlToImage).resize(1280, 720).onlyScaleDown().into(holder.newsRowImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

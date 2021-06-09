@@ -160,7 +160,7 @@ public class HomeFragment extends Fragment {
                     newsExamplePublishedAt.setText(formatDate);
                     newsExampleTime.setText(formatDate1);
 
-                    Picasso.get().load(urlToImage).into(newsExampleUrlToImage);
+                    Picasso.get().load(urlToImage).resize(1280, 720).onlyScaleDown().into(newsExampleUrlToImage);
 
                     homeCardView.setOnClickListener(new View.OnClickListener() {
                         @Override
