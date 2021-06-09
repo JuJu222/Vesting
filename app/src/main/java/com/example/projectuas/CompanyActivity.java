@@ -36,8 +36,6 @@ import model.VolleyCallback;
 
 public class CompanyActivity extends AppCompatActivity {
     RequestQueue mQueue;
-    boolean textFilled = false;
-    boolean ongoingReq = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

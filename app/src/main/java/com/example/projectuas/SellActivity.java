@@ -158,7 +158,7 @@ public class SellActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UserArray.currentUser.setBalance(UserArray.currentUser.getBalance() + (currentPrice * Integer.parseInt(sellLotsTextInputLayout.getEditText().getText().toString())));
 
-                sellPortfolioDB(position, getApplicationContext());
+                sellPortfolioDB(getApplicationContext());
                 Intent intent = new Intent();
                 intent.putExtra("position", position);
                 intent.putExtra("lots", Integer.parseInt(sellLotsTextInputLayout.getEditText().getText().toString()));
@@ -168,7 +168,7 @@ public class SellActivity extends AppCompatActivity {
         });
     }
 
-    private void sellPortfolioDB(int position, Context context) {
+    private void sellPortfolioDB(Context context) {
         String url = "http://192.168.100.18/vesting_webservice/sell_portfolio.php";
 
         RequestQueue mQueue = Volley.newRequestQueue(context);

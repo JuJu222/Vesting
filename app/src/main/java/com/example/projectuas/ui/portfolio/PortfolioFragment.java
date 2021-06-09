@@ -58,7 +58,7 @@ public class PortfolioFragment extends Fragment {
         portfolioBalanceTextView = root.findViewById(R.id.portfolioBalanceTextView);
         portfolioEquityTextView = root.findViewById(R.id.portfolioEquityTextView);
 
-        portfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(this, dataOwnedCompany, portfolioBalanceTextView, portfolioEquityTextView);
+        portfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(this, dataOwnedCompany, portfolioEquityTextView);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         portfolioRecyclerView.setLayoutManager(manager);

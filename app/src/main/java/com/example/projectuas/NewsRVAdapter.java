@@ -24,11 +24,9 @@ import model.News;
 
 public class NewsRVAdapter extends RecyclerView.Adapter<NewsRVAdapter.HolderSourceList>{
 
-    private Context context;
     private ArrayList<News> newsSource;
 
-    public NewsRVAdapter(Context context, ArrayList<News> newsSource) {
-        this.context = context;
+    public NewsRVAdapter(ArrayList<News> newsSource) {
         this.newsSource = newsSource;
     }
 

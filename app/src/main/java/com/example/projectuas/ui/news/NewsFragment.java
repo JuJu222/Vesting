@@ -53,7 +53,7 @@ public class NewsFragment extends Fragment {
 
         newsLoadingData.setVisibility(View.VISIBLE);
 
-        newsRVAdapter = new NewsRVAdapter(getActivity(), newsSource);
+        newsRVAdapter = new NewsRVAdapter(newsSource);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         newsRecyclerView.setAdapter(newsRVAdapter);
 

@@ -82,8 +82,7 @@ public class HomeFragment extends Fragment {
         homeCardView = root.findViewById(R.id.homeCardView);
         frameLayout3 = root.findViewById(R.id.frameLayout3);
 
-
-        dataNews(getContext());
+        dataNews();
 
         mQueue = Volley.newRequestQueue(getContext());
 
@@ -110,7 +109,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void dataNews(Context context) {
+    private void dataNews() {
         String url = "https://newsapi.org/v2/top-headlines?category=business&country=us&pageSize=20&apiKey=" + NewsAPI.API_KEY;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

@@ -54,21 +54,7 @@ public class Register extends AppCompatActivity {
         signup_button_Signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = signup_textInput_email.getEditText().getText().toString().trim();
-                String nama = signup_textInput_name.getEditText().getText().toString().trim();
-                String password = signup_textInput_pass.getEditText().getText().toString().trim();
-                String phone = signup_textInput_phone.getEditText().getText().toString().trim();
-                String address = signup_textInput_address.getEditText().getText().toString().trim();
-
                 if(validateEmail && validateName && validatePass && validatePhone && validateAddress){
-                    Intent intent = new Intent(Register.this, MainActivity.class);
-                    User user = new User(email, nama, password, phone, address, new ArrayList<>());
-                    for (int i = 0; i < UserArray.akunuser.size(); i++){
-                        if(user.getEmail().equalsIgnoreCase(UserArray.akunuser.get(i).getEmail())){
-                            Toast.makeText(getBaseContext(), "Email is already Registered!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
                     addDataDB(getApplicationContext());
                 }else {
                     Toast.makeText(Register.this, "Please correct/fill the field(s)", Toast.LENGTH_SHORT).show();

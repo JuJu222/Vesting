@@ -63,8 +63,7 @@ public class Login extends AppCompatActivity {
                 if(validateEmail && validatePass){
                     loginDB(getApplicationContext());
                 }else {
-                    login_textInput_email.setError("Please correct the email column");
-                    login_textInput_pass.setError("Please correct the password column");
+                    Toast.makeText(Login.this, "Please correct/fill the field(s)", Toast.LENGTH_SHORT).show();
                 }
             }
         });

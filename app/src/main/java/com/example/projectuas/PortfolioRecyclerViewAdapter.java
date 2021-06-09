@@ -38,16 +38,14 @@ import model.VolleyCallback;
 public class PortfolioRecyclerViewAdapter extends RecyclerView.Adapter<PortfolioRecyclerViewAdapter.PortfolioViewHolder> {
     private Fragment fragment;
     private ArrayList<OwnedCompany> ownedCompanyArrayList;
-    private TextView portfolioBalanceTextView;
     private TextView portfolioEquityTextView;
     private double totalCurrentValue;
     private boolean buttonClicked;
     double priceChangeDouble;
 
-    public PortfolioRecyclerViewAdapter(Fragment fragment, ArrayList<OwnedCompany> dataListedCompany, TextView portfolioBalanceTextView, TextView portfolioEquityTextView) {
+    public PortfolioRecyclerViewAdapter(Fragment fragment, ArrayList<OwnedCompany> dataListedCompany, TextView portfolioEquityTextView) {
         this.fragment = fragment;
         ownedCompanyArrayList = dataListedCompany;
-        this.portfolioBalanceTextView = portfolioBalanceTextView;
         this.portfolioEquityTextView = portfolioEquityTextView;
         totalCurrentValue = 0;
         this.buttonClicked = false;
