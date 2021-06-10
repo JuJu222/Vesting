@@ -19,24 +19,6 @@ public class User implements Parcelable{
         this.address = "";
     }
 
-    public User(String email, String nama, String password, String phoneNumber, String address) {
-        this.email = email;
-        this.nama = nama;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
-
-    public User(String email, String nama, String password, String phoneNumber, String address, ArrayList<OwnedCompany> ownedCompanies) {
-        this.email = email;
-        this.nama = nama;
-        this.password = password;
-        this.balance = 10000.00;
-        this.ownedCompanies = ownedCompanies;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
-
     protected User(Parcel in) {
         nama = in.readString();
         email = in.readString();
