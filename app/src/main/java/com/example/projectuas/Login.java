@@ -171,7 +171,7 @@ public class Login extends AppCompatActivity {
                     prefs.edit().putString("nama", objUser.getString("name")).apply();
                     Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
                 }catch (JSONException err){
-                    Toast.makeText(getApplicationContext(), "Unabled to Login, Wrong email/password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Unable to Login, Wrong email/password", Toast.LENGTH_SHORT).show();
                     err.printStackTrace();
                 }
             }
